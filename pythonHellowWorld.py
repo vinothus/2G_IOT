@@ -6,25 +6,36 @@ from os.path import dirname, realpath, sep, pardir
 import sys
 import bottle
 from bottle_log import LoggingPlugin
-
+from gpio import GPIO, GPIOError
 #app = bottle.Bottle()
 #app.install(LoggingPlugin(app.config))
 #path = 'C:\Users\511517\Desktop\bottle'
 #sys.path.append(r"C:\Users\511517\Desktop\bottle")
-def printme( str ):
+def printme():
    "This prints a passed string into this function"
-   print (str)
+   
+   gpio_in = GPIO(10, "in")
+  # Open GPIO 12 with output direction
+   gpio_out = GPIO(12, "out")
+
+   value = gpio_in.read()
+   gpio_out.write(value)
+
+   gpio_in.close()
+   gpio_out.close()
+   
+   
    # Open spidev1.0 with mode 0 and max speed 1MHz
-   spi = SPI("/dev/spidev1.0", 0, 1000000)
+   #spi = SPI("/dev/spidev1.0", 0, 1000000)
 
-   data_out = [0xaa, 0xbb, 0xcc, 0xdd]
-   data_in = spi.transfer(data_out)
+   #data_out = [0xaa, 0xbb, 0xcc, 0xdd]
+   #data_in = spi.transfer(data_out)
 
-   print("shifted out [0x%02x, 0x%02x, 0x%02x, 0x%02x]" % tuple(data_out))
-   print("shifted in  [0x%02x, 0x%02x, 0x%02x, 0x%02x]" % tuple(data_in))
+   #print("shifted out [0x%02x, 0x%02x, 0x%02x, 0x%02x]" % tuple(data_out))
+   #print("shifted in  [0x%02x, 0x%02x, 0x%02x, 0x%02x]" % tuple(data_in))
 
-   spi.close()
-   return	
+   #spi.close()
+   return	"Hello World!"+ os.getcwd() + str(sys.path)[1:-1]  +os.environ['PATH'] +os.path.realpath(__file__) +os.path.dirname(sys.argv[0])
 
 @route('/hello')
 def hello():
@@ -32,9 +43,9 @@ def hello():
 #os.environ['PATH'] += ':'+path;
 #response.charset = 'ISO-8859-15'
 #path ="C:\Users\511517\Desktop\bottle"
-     
-    #logger.warning('This is only a test')
-    return "Hello World!"+ os.getcwd() + str(sys.path)[1:-1]  +os.environ['PATH'] +os.path.realpath(__file__) +os.path.dirname(sys.argv[0])
+     #logger.warning('This is only a test')
+    return  printme()
+	#+"Hello World!"+ os.getcwd() + str(sys.path)[1:-1]  +os.environ['PATH'] +os.path.realpath(__file__) +os.path.dirname(sys.argv[0])
 	
 
 @route('/switch/<number>/<action>')
