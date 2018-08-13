@@ -62,9 +62,9 @@ def js():
 def static(logger,path):
     logger.warning('static')
     return static_file(path, root='static')
-
+@app.get('/counter')	
 @route('/counter')
-def counter():
+def counter(logger):
     count = int( request.cookies.get('counter', '0') )
     count += 1
     response.set_cookie('counter', str(count))
