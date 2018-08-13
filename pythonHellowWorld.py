@@ -1,6 +1,6 @@
 import sys
 import os
-sys.path.append(os.path.dirname(sys.argv[0])+'//lib')
+#sys.path.append(os.path.dirname(sys.argv[0])+'//lib')
 from bottle import route, run ,template ,static_file,view,request, response
 from os.path import dirname, realpath, sep, pardir
 import sys
