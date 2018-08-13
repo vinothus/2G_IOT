@@ -33,22 +33,22 @@ def hello():
 #response.charset = 'ISO-8859-15'
 #path ="C:\Users\511517\Desktop\bottle"
      
-    logger.warning('This is only a test')
+    #logger.warning('This is only a test')
     return "Hello World!"+ os.getcwd() + str(sys.path)[1:-1]  +os.environ['PATH'] +os.path.realpath(__file__) +os.path.dirname(sys.argv[0])
 	
 
 @route('/switch/<number>/<action>')
 def switchProcessing(number='number',action='action'):
 
- logger.warning('the switch '+number+' undergoes action '+action)
+# logger.warning('the switch '+number+' undergoes action '+action)
  return  'the switch '+number+' undergoes action '+action
 
  
-@app.get('/')
+
 @route('/')
 @view('index')
-def index(logger):
-    logger.warning('index')
+def index():
+   # logger.warning('index')
     return { 'get_url': '' } 
 	
 @route('/')
@@ -60,7 +60,7 @@ def js():
 
 @route('/static/:path#.+#', name='static')
 def static(path):
-    logger.warning('static')
+    #logger.warning('static')
     return static_file(path, root='static')
 
 @route('/counter')
