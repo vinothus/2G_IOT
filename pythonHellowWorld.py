@@ -68,5 +68,4 @@ def counter():
     response.set_cookie('counter', str(count))
     return 'You visited this page %d times' % count
 
-
 run(app,host='localhost', port=8080, debug=True)
