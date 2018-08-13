@@ -1,14 +1,16 @@
+import sys
+import os
+sys.path.append(os.path.dirname(sys.argv[0])+'//lib')
 from bottle import route, run ,template ,static_file,view,request, response
 from os.path import dirname, realpath, sep, pardir
 import sys
-import os
 import bottle
 from bottle_log import LoggingPlugin
 
 app = bottle.Bottle()
 app.install(LoggingPlugin(app.config))
 #path = 'C:\Users\511517\Desktop\bottle'
-
+#sys.path.append(r"C:\Users\511517\Desktop\bottle")
 def printme( str ):
    "This prints a passed string into this function"
    print (str)
@@ -32,7 +34,7 @@ def hello(logger):
 #path ="C:\Users\511517\Desktop\bottle"
      
     logger.warning('This is only a test')
-    return "Hello World!"+ os.getcwd() + str(sys.path)[1:-1]  +os.environ['PATH']
+    return "Hello World!"+ os.getcwd() + str(sys.path)[1:-1]  +os.environ['PATH'] +os.path.realpath(__file__) +os.path.dirname(sys.argv[0])
 	
 @app.get('/switch/<number>/<action>')
 @route('/switch/<number>/<action>')
@@ -67,5 +69,6 @@ def counter():
     count += 1
     response.set_cookie('counter', str(count))
     return 'You visited this page %d times' % count
+
 
 run(app,host='localhost', port=8080, debug=True)
