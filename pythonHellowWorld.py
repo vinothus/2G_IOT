@@ -12,6 +12,10 @@ from gpio import GPIO, GPIOError
 #path = 'C:\Users\511517\Desktop\bottle'
 #sys.path.append(r"C:\Users\511517\Desktop\bottle")
 bottle.TEMPLATE_PATH.insert(0, os.path.dirname(sys.argv[0])+'/views')
+
+def str2bool(v):
+  return v.lower() in ("yes", "true", "t", "1","on")
+  
 def printme(pinnum,boolval):
    "This prints a passed string into this function"
    
@@ -52,11 +56,9 @@ def hello():
 
 @route('/switch/<number>/<action>')
 def switchProcessing(number='number',action='action'):
-  switchno=int(number)
-  active = True if action == 'on' else False
-  printme(switchno,active)
-# logger.warning('the switch '+number+' undergoes action '+action)
- return  'the switch '+number+' undergoes action '+action
+    #ActionBool = str2bool(action)
+    # logger.warning('the switch '+number+' undergoes action '+action)
+  return  printme(int(number),  str2bool(action))
 
  
 
