@@ -11,6 +11,7 @@ from gpio import GPIO, GPIOError
 #app.install(LoggingPlugin(app.config))
 #path = 'C:\Users\511517\Desktop\bottle'
 #sys.path.append(r"C:\Users\511517\Desktop\bottle")
+bottle.TEMPLATE_PATH.insert(0, os.path.dirname(sys.argv[0])+'/views')
 def printme():
    "This prints a passed string into this function"
    
@@ -72,7 +73,7 @@ def js():
 @route('/static/:path#.+#', name='static')
 def static(path):
     #logger.warning('static')
-    return static_file(path, root='static')
+    return static_file(path, root=os.path.dirname(sys.argv[0])+'/static')
 
 @route('/counter')
 def counter():
