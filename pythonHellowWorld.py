@@ -12,14 +12,14 @@ from gpio import GPIO, GPIOError
 #path = 'C:\Users\511517\Desktop\bottle'
 #sys.path.append(r"C:\Users\511517\Desktop\bottle")
 bottle.TEMPLATE_PATH.insert(0, os.path.dirname(sys.argv[0])+'/views')
-def printme():
+def printme(pinnum,boolval):
    "This prints a passed string into this function"
    
    gpio_in = GPIO(10, "in")
   # Open GPIO 12 with output direction
-   gpio_out = GPIO(56, "out")
+   gpio_out = GPIO(pinnum, "out")
 
-   value =True  
+   value =boolval  
    # gpio_in.read()
    gpio_out.write(value)
 
@@ -46,13 +46,15 @@ def hello():
 #response.charset = 'ISO-8859-15'
 #path ="C:\Users\511517\Desktop\bottle"
      #logger.warning('This is only a test')
-    return  printme()
+    return  printme(56,True)
 	#+"Hello World!"+ os.getcwd() + str(sys.path)[1:-1]  +os.environ['PATH'] +os.path.realpath(__file__) +os.path.dirname(sys.argv[0])
 	
 
 @route('/switch/<number>/<action>')
 def switchProcessing(number='number',action='action'):
-
+  switchno=int(number)
+  active = True if action == 'on' else False
+  printme(switchno,active)
 # logger.warning('the switch '+number+' undergoes action '+action)
  return  'the switch '+number+' undergoes action '+action
 
