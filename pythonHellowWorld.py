@@ -17,9 +17,10 @@ def printme():
    
    gpio_in = GPIO(10, "in")
   # Open GPIO 12 with output direction
-   gpio_out = GPIO(12, "out")
+   gpio_out = GPIO(56, "out")
 
-   value = gpio_in.read()
+   value =1  
+   # gpio_in.read()
    gpio_out.write(value)
 
    gpio_in.close()
