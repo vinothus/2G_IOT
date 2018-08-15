@@ -131,6 +131,16 @@ app.controller("controller", function($scope) {
     $scope.firstName = "John";
     $scope.lastName = "Doe";
 });
+
+app.controller('GPIOpins', function($scope, $http) {
+    $http.get("getGPIO")
+    .then(function(response) {
+    console.log();
+        $scope.gpios = {gpio56:true};
+        console.log(response.data);
+    });
+});
+
 app.config(function($routeProvider) {
     $routeProvider
     .when("/", {

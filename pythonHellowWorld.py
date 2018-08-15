@@ -100,5 +100,9 @@ def counter():
     response.set_cookie('counter', str(count))
     return 'You visited this page %d times' % count
 
+@route('/getGPIO')
+def getGPIO():
+
+   return {"gpio56":True}
 
 run(host='0.0.0.0', port=8080, debug=True)
