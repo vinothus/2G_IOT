@@ -37,7 +37,7 @@
             </li>
             <li class="nav-item dropdown">
               <!--a class="nav-link" href="#">Services</a-->
-			      <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#">Living Places
+			      <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="">Living Places
         <span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li class="nav-item" ><a class="dropdown-item"  href="#">Living Hall</a></li>
