@@ -43,6 +43,15 @@ def printme(pinnum,boolval):
    #spi.close()
    return	"Hello World!"+ os.getcwd() + str(sys.path)[1:-1]  +os.environ['PATH'] +os.path.realpath(__file__) +os.path.dirname(sys.argv[0])
 
+
+def getVal(pinnum):
+   "This prints a passed string into this function"
+   gpio_in = GPIO(pinnum, "in")
+   value =gpio_in.read()
+   gpio_in.close()
+   
+   return	value
+
 @route('/hello')
 def hello():
 # path = 'C:\Users\511517\Desktop\bottle';
@@ -60,6 +69,10 @@ def switchProcessing(number='number',action='action'):
     # logger.warning('the switch '+number+' undergoes action '+action)
   return  printme(int(number),  str2bool(action))
 
+@route('/getSwitchStatus/<number>')
+def switchProcessing(number='number'):
+     
+  return  getVal(int(number))
  
 
 @route('/')
