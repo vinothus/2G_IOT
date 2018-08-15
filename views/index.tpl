@@ -137,9 +137,7 @@ app.controller('GPIOpins', function($scope, $http) {
     .then(function(response) {
     console.log();
         $scope.gpios =response.data;
-        console.log(response.data.gpio101);
-       console.log($scope.gpios);
-        console.log(response.data);
+       
     });
 });
 
