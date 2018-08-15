@@ -139,6 +139,27 @@ app.controller('GPIOpins', function($scope, $http) {
         $scope.gpios =response.data;
        
     });
+              $scope.gpioFunctions = {};
+              $scope.gpioFunctions.CheckedGpio = function($event,id) {
+              var action;
+              if($event)
+              {
+              action="on";
+              console.log('true : id '+id);
+              }else
+              {
+              action="off";
+              console.log('false :'+id);
+              }
+               $http.get("/switch/"+id+"/"+action)
+   			 .then(function(response) {
+ 			   
+       		 console.lolg(response.data);
+       
+ 			    });
+                
+          }
+    
 });
 
 app.config(function($routeProvider) {
