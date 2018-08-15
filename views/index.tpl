@@ -136,7 +136,9 @@ app.controller('GPIOpins', function($scope, $http) {
     $http.get("getGPIO")
     .then(function(response) {
     console.log();
-        $scope.gpios = {gpio56:true};
+        $scope.gpios =response.data;
+        console.log(response.data.gpio101);
+       console.log($scope.gpios);
         console.log(response.data);
     });
 });

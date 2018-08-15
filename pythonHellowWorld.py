@@ -103,6 +103,6 @@ def counter():
 @route('/getGPIO')
 def getGPIO():
 
-   return {"gpio56":True}
+   return {"gpio56":True,"gpio122":False,"gpio123":False,"gpio124":False,"gpio125":False,"gpio126":False,"gpio121":False,"gpio101":True}
 
 run(host='0.0.0.0', port=8080, debug=True)
