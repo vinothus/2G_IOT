@@ -46,7 +46,7 @@ def printme(pinnum,boolval):
 
 def getVal(pinnum):
    "This prints a passed string into this function"
-   gpio_in = GPIO(pinnum, "in")
+   gpio_in = GPIO(pinnum, "out")
    value =gpio_in.read()
    gpio_in.close()
    
