@@ -40,12 +40,12 @@
 			      <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="">Living Places
         <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li class="nav-item" ><a class="dropdown-item"  href="#">Living Hall</a></li>
-          <li class="nav-item"><a class="dropdown-item"  href="#">Bed Room 1</a></li>
-          <li class="nav-item"><a class="dropdown-item"  href="#">Bed Room 2</a></li>
-		  <li class="nav-item"><a class="dropdown-item"   href="#">Power Room</a></li>
-		  <li class="nav-item"><a class="dropdown-item"  href="#">Kitchen</a></li>
-		  <li class="nav-item"><a class="dropdown-item"  href="#">Bath room</a></li>
+          <li class="nav-item" ><a class="dropdown-item"  href="#!/livinghall">Living Hall</a></li>
+          <li class="nav-item"><a class="dropdown-item"  href="#!/bedroom1">Bed Room 1</a></li>
+          <li class="nav-item"><a class="dropdown-item"  href="#!/bedroom2">Bed Room 2</a></li>
+		  <li class="nav-item"><a class="dropdown-item"   href="#!/powerroom">Power Room</a></li>
+		  <li class="nav-item"><a class="dropdown-item"  href="#!/kitchen">Kitchen</a></li>
+		  <li class="nav-item"><a class="dropdown-item"  href="#!/bathroom">Bath room</a></li>
 		   <li class="nav-item"><a class="dropdown-item"  href="#!/totalswitch">Total Switch</a></li>
         </ul>
             </li>
@@ -167,17 +167,26 @@ app.config(function($routeProvider) {
     .when("/", {
         templateUrl : "static/main.htm"
     })
-    .when("/red", {
-        templateUrl : "red.htm"
+    .when("/bedroom1", {
+        templateUrl : "static/bedRoom1.htm"
     })
-    .when("/green", {
-        templateUrl : "green.htm"
+    .when("/bedroom2", {
+        templateUrl : "static/bedRoom2.htm"
     })
-    .when("/blue", {
-        templateUrl : "blue.htm"
+    .when("/powerroom", {
+        templateUrl : "static/powerRoom.htm"
     })
      .when("/totalswitch", {
         templateUrl : "static/totalswitch.htm"
+    })
+    .when("/livinghall", {
+        templateUrl : "static/livingHall.htm"
+    })
+     .when("/bathroom", {
+        templateUrl : "static/bathRoom.htm"
+    })
+     .when("/kitchen", {
+        templateUrl : "static/kitchen.htm"
     });
 });
 </script>

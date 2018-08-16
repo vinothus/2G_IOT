@@ -1,0 +1,51 @@
+<form><div class="col-lg-12">
+          <h3>Kitchen</h3>
+         </div>
+        
+<div class="card"   ng-controller="GPIOpins">
+  <div class="card-header">Switch ON/OF Controls</div>
+   <div class="card-body">
+
+<ul class="list-group">
+
+ <li class="list-group-item d-flex justify-content-between align-items-center">
+   <label>Exhaust Fan </label>
+<label class="switch" style="float:right;">
+  <input type="checkbox" id="56" ng-change="gpioFunctions.CheckedGpio(gpios.gpio56,'56')" ng-model="gpios.gpio56" > 
+  <span class="slider round  "></span></label>
+ </li>
+ 
+ 
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+   <label>LED Light</label>
+<label class="switch" style="float:right;">
+  <input type="checkbox" id="122"  ng-change="gpioFunctions.CheckedGpio(gpios.gpio122,'122')" ng-model="gpios.gpio122" checked > 
+  <span class="slider round  "></span></label>
+ </li>
+ <li class="list-group-item d-flex justify-content-between align-items-center">
+   <label>Gas Valve</label>
+<label class="switch" style="float:right;">
+  <input type="checkbox" id="123"  ng-change="gpioFunctions.CheckedGpio(gpios.gpio123,'123')"  ng-model="gpios.gpio123" checked> 
+  <span class="slider round  "></span></label>
+ </li>
+  
+   <li class="list-group-item d-flex justify-content-between align-items-center">
+   <label>Water Filter</label>
+<label class="switch" style="float:right;">
+  <input type="checkbox" id="124" ng-model="gpios.gpio124"  ng-change="gpioFunctions.CheckedGpio(gpios.gpio124,'124')"> 
+  <span class="slider round  "></span></label>
+ </li>
+ 
+ <li class="list-group-item d-flex justify-content-between align-items-center">
+   <label>Tube Light</label>
+<label class="switch" style="float:right;">
+  <input type="checkbox" id="125" ng-model="gpios.gpio125"  ng-change="gpioFunctions.CheckedGpio(gpios.gpio125,'125')"> 
+  <span class="slider round  "></span></label>
+ </li>
+ 
+ 
+</ul>
+
+  </div> 
+  <div class="card-footer"><b>Note :</b> ON/OFF functionality worked based on hardware setup</div>
+</div>
