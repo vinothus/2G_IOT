@@ -29,18 +29,7 @@ def printme(pinnum,boolval):
 
    gpio_in.close()
    gpio_out.close()
-   
-   
-   # Open spidev1.0 with mode 0 and max speed 1MHz
-   #spi = SPI("/dev/spidev1.0", 0, 1000000)
 
-   #data_out = [0xaa, 0xbb, 0xcc, 0xdd]
-   #data_in = spi.transfer(data_out)
-
-   #print("shifted out [0x%02x, 0x%02x, 0x%02x, 0x%02x]" % tuple(data_out))
-   #print("shifted in  [0x%02x, 0x%02x, 0x%02x, 0x%02x]" % tuple(data_in))
-
-   #spi.close()
    return	"Hello World!"+ os.getcwd() + str(sys.path)[1:-1]  +os.environ['PATH'] +os.path.realpath(__file__) +os.path.dirname(sys.argv[0])
 
 
