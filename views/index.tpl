@@ -50,12 +50,12 @@
         </ul>
             </li>
             <li data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" ng-class="menuIndice == 2 ? 'active':''" class="nav-item">
-              <a ng-click="menuIndice = 2" class="nav-link" href="#">Contact</a>
+              <a ng-click="menuIndice = 2" class="nav-link" href="#!/contactus">Contact</a>
             </li>
           </ul>
 		   <ul class="nav navbar-nav navbar-right">
-      <li data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" class="nav-item" ><a class="nav-link" href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-      <li data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" class="nav-item" ><a class="nav-link" href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      <li data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" class="nav-item" ><a class="nav-link" href="#!/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+      <li data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" class="nav-item" ><a class="nav-link" href="#!/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
     </ul>
          <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -191,7 +191,14 @@ app.config(function($routeProvider) {
     })
      .when("/kitchen", {
         templateUrl : "static/kitchen.htm"
-    });
+    })
+    .when("/contactus", {
+        templateUrl : "static/contactus.htm"
+    }).when("/login", {
+        templateUrl : "static/login.htm"
+    }).when("/signup", {
+        templateUrl : "static/signup.htm"
+    }) ;
 });
 </script>
   </body>
