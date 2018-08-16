@@ -18,19 +18,11 @@ def str2bool(v):
   
 def printme(pinnum,boolval):
    "This prints a passed string into this function"
-   
-   gpio_in = GPIO(10, "in")
-  # Open GPIO 12 with output direction
    gpio_out = GPIO(pinnum, "out")
-
    value =boolval  
-   # gpio_in.read()
    gpio_out.write(value)
-
-   gpio_in.close()
    gpio_out.close()
-
-   return	"Hello World!"+ os.getcwd() + str(sys.path)[1:-1]  +os.environ['PATH'] +os.path.realpath(__file__) +os.path.dirname(sys.argv[0])
+   return	True
 
 
 def getVal(pinnum):
