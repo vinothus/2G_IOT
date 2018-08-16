@@ -24,33 +24,33 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container"  >
-        <a class="navbar-brand" href="#!/">Smart Home</a>
+        <a  class="navbar-brand" href="#!/">Smart Home</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home
-                <span class="sr-only">(current)</span>
+            <li ng-class="menuIndice == 3 ? 'active':''" class="nav-item">
+              <a ng-click="menuIndice = 3"  class="nav-link" href="#">Home
+                <!--span class="sr-only">(current)</span-->
               </a>
             </li>
-            <li class="nav-item dropdown">
+            <li ng-class="menuIndice == 1 ? 'active':''" class="nav-item dropdown">
               <!--a class="nav-link" href="#">Services</a-->
-			      <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="">Living Places
+			      <a    class="dropdown-toggle nav-link" data-toggle="dropdown" href="">Living Places
         <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li class="nav-item" ><a class="dropdown-item"  href="#!/livinghall">Living Hall</a></li>
-          <li class="nav-item"><a class="dropdown-item"  href="#!/bedroom1">Bed Room 1</a></li>
-          <li class="nav-item"><a class="dropdown-item"  href="#!/bedroom2">Bed Room 2</a></li>
-		  <li class="nav-item"><a class="dropdown-item"   href="#!/powerroom">Power Room</a></li>
-		  <li class="nav-item"><a class="dropdown-item"  href="#!/kitchen">Kitchen</a></li>
-		  <li class="nav-item"><a class="dropdown-item"  href="#!/bathroom">Bath room</a></li>
-		   <li class="nav-item"><a class="dropdown-item"  href="#!/totalswitch">Total Switch</a></li>
+          <li class="nav-item" ><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/livinghall">Living Hall</a></li>
+          <li class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/bedroom1">Bed Room 1</a></li>
+          <li class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/bedroom2">Bed Room 2</a></li>
+		  <li class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"   href="#!/powerroom">Power Room</a></li>
+		  <li class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/kitchen">Kitchen</a></li>
+		  <li class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/bathroom">Bath room</a></li>
+		   <li class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/totalswitch">Total Switch</a></li>
         </ul>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Contact</a>
+            <li ng-class="menuIndice == 2 ? 'active':''" class="nav-item">
+              <a ng-click="menuIndice = 2" class="nav-link" href="#">Contact</a>
             </li>
           </ul>
 		   <ul class="nav navbar-nav navbar-right">
@@ -128,8 +128,12 @@
 var app = angular.module("smartHome",  ["ngRoute"]); 
 
 app.controller("controller", function($scope) {
-    $scope.firstName = "John";
-    $scope.lastName = "Doe";
+     
+  $scope.isActive = function (viewLocation) {
+     var active = (viewLocation === $location.path());
+     return active;
+};   
+     
 });
 
 app.controller('GPIOpins', function($scope, $http) {
