@@ -46,7 +46,7 @@
 		  <li data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"   href="#!/powerroom">Power Room</a></li>
 		  <li data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/kitchen">Kitchen</a></li>
 		  <li data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/bathroom">Bath room</a></li>
-		   <lidata-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"  class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/totalswitch">Total Switch</a></li>
+		   <li data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"  class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/totalswitch">Total Switch</a></li>
         </ul>
             </li>
             <li data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" ng-class="menuIndice == 2 ? 'active':''" class="nav-item">
