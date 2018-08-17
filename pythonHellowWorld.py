@@ -12,7 +12,7 @@ from gpio import GPIO, GPIOError
 #path = 'C:\Users\511517\Desktop\bottle'
 #sys.path.append(r"C:\Users\511517\Desktop\bottle")
 bottle.TEMPLATE_PATH.insert(0, os.path.dirname(sys.argv[0])+'/views')
-
+  
 def str2bool(v):
   return v.lower() in ("yes", "true", "t", "1","on")
   
@@ -27,11 +27,26 @@ def printme(pinnum,boolval):
 
 def getVal(pinnum):
    "This prints a passed string into this function"
+   gpio_in = GPIO(pinnum, "preserve")
+   value =gpio_in.read()
+   gpio_in.close()
+   
+   return	value
+def getValOut(pinnum):
+   "This prints a passed string into this function"
    gpio_in = GPIO(pinnum, "out")
    value =gpio_in.read()
    gpio_in.close()
    
    return	value
+
+def _init_():
+  try:
+     print('init script')
+     print( {"gpio56":getValOut(56),"gpio122":getValOut(122),"gpio123":getValOut(123),"gpio124":getValOut(124),"gpio125":getValOut(125),"gpio126":getValOut(126),"gpio121":getValOut(121),"gpio101":getValOut(101)})
+  except:
+     print('exception occur on initilize smart device')
+_init_() 
 
 @route('/hello')
 def hello():
