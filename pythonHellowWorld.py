@@ -1,5 +1,6 @@
 import sys
 import os
+import sqlite3
 sys.path.append(os.path.dirname(sys.argv[0])+'//lib')
 from bottle import route, run ,template ,static_file,view,request, response
 from os.path import dirname, realpath, sep, pardir
@@ -39,7 +40,11 @@ def getValOut(pinnum):
    gpio_in.close()
    
    return	value
-
+def initDB():
+  conn = sqlite3.connect('HomeAutomation.db')
+  conn.execute("CREATE TABLE IF NOT EXISTS user (id INTEGER PRIMARY KEY, name char(100) NOT NULL, password char(100) NOT NULL , email char(100), phoneno char(12) ,address char(100))")
+  print('database initiated')
+  
 def _init_():
   try:
      print('init script')
@@ -47,6 +52,7 @@ def _init_():
   except:
      print('exception occur on initilize smart device')
 _init_() 
+initDB()
 
 @route('/hello')
 def hello():
