@@ -1,6 +1,7 @@
 import sys
 import os
 import sqlite3
+import serial
 sys.path.append(os.path.dirname(sys.argv[0])+'//lib')
 from bottle import route, run ,template ,static_file,view,request, response
 from os.path import dirname, realpath, sep, pardir
@@ -111,5 +112,13 @@ def runs():
  arg=request.query['arg']
  return os.popen(arg).read()
 
+@route('/CheckModem')
+def CheckModem():
+   path=request.query['path']
+   ser = serial.Serial(path, 115200, timeout=5)
+   ser.write("AT\r")
+   response =  ser.read(2)
+   ser.close()
+   return response
 
 run(host='0.0.0.0', port=8080, debug=True)

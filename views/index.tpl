@@ -39,14 +39,14 @@
               <!--a class="nav-link" href="#">Services</a-->
 			      <a    class="dropdown-toggle nav-link" data-toggle="dropdown" href="">Living Places
         <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" class="nav-item" ><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/livinghall">Living Hall</a></li>
-          <li data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/bedroom1">Bed Room 1</a></li>
-          <li data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/bedroom2">Bed Room 2</a></li>
-		  <li data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"   href="#!/powerroom">Power Room</a></li>
-		  <li data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/kitchen">Kitchen</a></li>
-		  <li data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/bathroom">Bath room</a></li>
-		   <li data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"  class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/totalswitch">Total Switch</a></li>
+        <ul data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" class="dropdown-menu">
+          <li    class="nav-item" ><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/livinghall">Living Hall</a></li>
+          <li    class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/bedroom1">Bed Room 1</a></li>
+          <li   class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/bedroom2">Bed Room 2</a></li>
+		  <li   class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"   href="#!/powerroom">Power Room</a></li>
+		  <li    class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/kitchen">Kitchen</a></li>
+		  <li   class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/bathroom">Bath room</a></li>
+		   <li   class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/totalswitch">Total Switch</a></li>
         </ul>
             </li>
             <li data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" ng-class="menuIndice == 2 ? 'active':''" class="nav-item">
@@ -132,7 +132,7 @@
 <script>
 
 var app = angular.module("smartHome",  ["ngRoute"]); 
-  
+ var progress;
 app.controller("controller", function($scope) {
      
   $scope.isActive = function (viewLocation) {
@@ -246,7 +246,7 @@ app.config(function($routeProvider) {
       <div class="progress">
   <div class="progress-bar" id="Progressstatus" role="progressbar" aria-valuenow="70"
   aria-valuemin="0" aria-valuemax="100" style="width:70%">
-    <span class="sr-only">70% Complete</span>
+    <span id ="perCom" class="sr-only">70% Complete</span>
   </div>
 </div></div>
 
