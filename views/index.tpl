@@ -65,6 +65,11 @@
 		
       </div>
     </nav>
+     <div id="Alert" style="display:none;"> 
+    <div  class="alert alert-danger alert-dismissible" style="display:none;">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong id="AlertStrong">Danger!</strong> <span id="AlertSpan">This alert box could indicate a dangerous or potentially negative action.</span>
+  </div></div>
 <!--nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">Navbar</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -100,6 +105,7 @@
     </form>
   </div>
 </nav>
+
     <!-- Page Content -->
     <div  ng-view class="container">
 
@@ -126,7 +132,7 @@
 <script>
 
 var app = angular.module("smartHome",  ["ngRoute"]); 
-
+  
 app.controller("controller", function($scope) {
      
   $scope.isActive = function (viewLocation) {
@@ -144,6 +150,14 @@ app.controller('GPIOpins', function($scope, $http) {
        
     });
               $scope.gpioFunctions = {};
+               $scope.gpioFunctions.ShowAlert=function(StrongMsg,Msg,divContent)
+               {
+               console.log('Alert');
+               $('#Alert').html(divContent);
+               $('#Alert').show();
+               $('#AlertStrong').html(StrongMsg);
+               $('#AlertSpan').html(Msg);
+               } 
               $scope.gpioFunctions.CheckedGpio = function($event,id) {
               var action;
               if($event)
@@ -155,12 +169,23 @@ app.controller('GPIOpins', function($scope, $http) {
               action="off";
               console.log('false :'+id);
               }
+           $("#modalHeading").html("Request Switch "+id +" to " +action);
                $http.get("/switch/"+id+"/"+action)
    			 .then(function(response) {
  			   
        		 console.lolg(response.data);
-       
- 			    });
+         $('#smartHomeModal').modal('hide');
+ 			    }).catch(function onError(response) {
+    // Handle error
+    var data = response.data;
+    var status = response.status;
+    var statusText = response.statusText;
+    var headers = response.headers;
+    var config = response.config;
+    $('#smartHomeModal').modal('hide');
+    var divContent='<div  class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong id="AlertStrong">Danger!</strong> <span id="AlertSpan">This alert box could indicate a dangerous or potentially negative action.</span>  </div>';
+      $scope.gpioFunctions.ShowAlert('Response Fails','Please try after some time',divContent);
+     });
                 
           }
     
@@ -201,6 +226,39 @@ app.config(function($routeProvider) {
     }) ;
 });
 </script>
+
+<div class="modal" id="smartHomeModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <!--div class="modal-header">
+        <h4 class="modal-title" id="modalHeading" ng-modal="modalHeading">Modal Heading</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div-->
+
+      <!-- Modal body -->
+      <div class="modal-body"  ng-modal="modalBody">
+        <img width="100vh" class="img-responsive" src="static/img/progress.gif" >
+      <div class="progress">
+  <div class="progress-bar" id="Progressstatus" role="progressbar" aria-valuenow="70"
+  aria-valuemin="0" aria-valuemax="100" style="width:70%">
+    <span class="sr-only">70% Complete</span>
+  </div>
+</div></div>
+
+      <!-- Modal footer -->
+      <!--div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div-->
+
+    </div>
+  </div>
+</div>
+
+
+
+  
   </body>
 
 </html>
