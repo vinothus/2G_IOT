@@ -169,13 +169,16 @@ app.controller('GPIOpins', function($scope, $http) {
               action="off";
               console.log('false :'+id);
               }
-           $("#modalHeading").html("Request Switch "+id +" to " +action);
+         
                $http.get("/switch/"+id+"/"+action)
    			 .then(function(response) {
  			   
        		 console.lolg(response.data);
          $('#smartHomeModal').modal('hide');
- 			    }).catch(function onError(response) {
+		   var successDiv='<div class="alert alert-success"> <strong>Success!</strong> Indicates a successful or positive action.		</div>';
+		    $scope.gpioFunctions.ShowAlert('Success!','Good Time',successDiv);
+      	
+		   		    }).catch(function onError(response) {
     // Handle error
     var data = response.data;
     var status = response.status;
