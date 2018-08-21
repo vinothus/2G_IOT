@@ -1,4 +1,10 @@
 <div  ng-controller="CereatePort">
+
+ <div class="row">
+ <div class="pull-right"><button class="btn btn-primary" data-toggle="modal" data-target="#AddPort" id="command-add" data-row-id="0">
+ <span class="glyphicon glyphicon-plus"></span> Create Port</button></div></div>
+ 
+ 
 <table id="port-grid-data" class="table table-condensed table-hover table-striped">
     <thead>
         <tr>
@@ -6,9 +12,60 @@
             <th data-column-id="roomname">Port Name</th>
             <th data-column-id="roomdesc" data-order="desc">Port Description</th>
             <th data-column-id="roomdesc" data-order="desc">Port Type</th>
-            <th data-column-id="roomdesc" data-order="desc">Port HardWare ID</th>
+            <th data-column-id="roomdesc" data-order="desc">Port Hardware ID</th>
             <th data-column-id="commands" data-formatter="commands" data-sortable="false">Action</th>
         </tr>
     </thead>
 </table>
+
+
+<!-- The Modal -->
+<div class="modal" id="AddPort">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Add Port</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <form method="post" id="room_add">
+      <!-- Modal body -->
+       <div class="modal-body">
+                
+                <input type="hidden" value="add" name="action" id="action">
+                  <div class="form-group">
+                    <label for="portname" class="control-label">Port Name:</label>
+                    <input type="text" class="form-control" id="portname" name="portname"/>
+                  </div>
+                  <div class="form-group">
+                    <label for="portdesc" class="control-label">Port Description:</label>
+                    <input type="text" class="form-control" id="portdesc" name="portdesc"/>
+                  </div>
+   				  <div class="form-group">
+                    <label for="porttype" class="control-label">Port Type:</label>
+                    <input type="text" class="form-control" id="porttype" name="porttype"/>
+                  </div>
+                <div class="form-group">
+                    <label for="porthdid" class="control-label">Port Hardware ID:</label>
+                    <input type="text" class="form-control" id="porthdid" name="porthdid"/>
+                  </div>
+            </div>
+            </form>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+         <button type="button" id="btn_add" class="btn btn-primary">Save</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
 </div>
