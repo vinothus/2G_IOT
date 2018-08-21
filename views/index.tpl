@@ -196,14 +196,28 @@ var grid = $("#port-grid-data").bootgrid({
 
 
 });
+app.controller('CereateRoomModal' , function($scope, $http){
 
+$scope.saveRoom=function(room)
+{
+console.log(room);
+
+
+}
+
+  $scope.modalCloseButtonClick = function () {
+      console.log("do action on Modal");
+      $scope.room={};
+      console.log("Current '$scope.room' value is [[" + $scope.room + "]]");
+   };
+});
 app.controller('CereateRoom' , function($scope, $http){
 
 console.log('room-grid-data');
-
-
- 
-
+$scope.openRoom=function()
+ { var dlgElem = angular.element("#addRoomDlg");
+  
+}
 
 var grid = $("#room-grid-data").bootgrid({
     ajax: true,
