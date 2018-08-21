@@ -138,6 +138,6 @@ def getPorts():
     c = conn.cursor()
     c.execute("SELECT * FROM port ")
     result = c.fetchall()
-    return str(result)
+    return dict(data=result)
     
 run(host='0.0.0.0', port=8080, debug=True)

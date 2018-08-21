@@ -58,6 +58,7 @@
         <ul data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" class="dropdown-menu">
           <li    class="nav-item" ><a ng-click="menuIndice = 3" class="dropdown-item"  href="#!/CreateRoom">Create Room</a></li>
           <li    class="nav-item"><a ng-click="menuIndice = 3" class="dropdown-item"  href="#!/HouseHolds">Create House Holds</a></li>
+          <li    class="nav-item"><a ng-click="menuIndice = 3" class="dropdown-item"  href="#!/Ports">Create Ports</a></li>
           
         </ul>
             </li>
@@ -156,6 +157,45 @@ app.controller("controller", function($scope) {
 };   
      
 });
+
+
+
+app.controller('CereatePort' , function($scope, $http){
+
+console.log('port-grid-data');
+
+var grid = $("#port-grid-data").bootgrid({
+    ajax: true,
+    post: function ()
+    {
+        return {
+            id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
+        };
+    },
+    url: "/api/data/basic",
+    formatters: {
+        "commands": function(column, row)
+        {
+            return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-pencil\"></span></button> " + 
+                "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-trash-o\"></span></button>";
+        }
+    }
+}).on("loaded.rs.jquery.bootgrid", function()
+{
+    /* Executes after data is loaded and rendered */
+    grid.find(".command-edit").on("click", function(e)
+    {
+        alert("You pressed edit on row: " + $(this).data("row-id"));
+    }).end().find(".command-delete").on("click", function(e)
+    {
+        alert("You pressed delete on row: " + $(this).data("row-id"));
+    });
+});
+
+
+
+});
+
 app.controller('CereateRoom' , function($scope, $http){
 
 console.log('room-grid-data');
@@ -318,9 +358,9 @@ app.config(function($routeProvider) {
         templateUrl : "static/createRoom.htm"
     }).when("/HouseHolds", {
         templateUrl : "static/HouseHolds.htm"
-    })
-    
-     ;
+    }).when("/Ports", {
+        templateUrl : "static/Ports.htm"
+    });
 });
 </script>
 
