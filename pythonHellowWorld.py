@@ -171,6 +171,34 @@ def getRooms():
     c.execute("SELECT * FROM rooms ")
     result = c.fetchall()
     return dict(data=result)
+def getRowCount(tablename):
+    con = sqlite3.connect('HomeAutomation.db')
+    cursor = con.cursor()
+    cursor.execute("select count(*) from "+tablename) #returns array of tupples
+    result = cursor.fetchall()
+  
+    return result[0][0]
+@route('/getRoomBootGrid',method='POST')
+def getRooms():
+    conn = sqlite3.connect('HomeAutomation.db')
+    c = conn.cursor()
+    c.execute("SELECT * FROM rooms ")
+    result = c.fetchall()
+    rows=[];
+    print(result) 
+    for i in range(len(result)):
+         id=result[i][0]
+         roomname=result[i][1]
+         roomdesc=result[i][2]
+         rows.append({"id":id,"roomname":roomname,"roomdesc":roomdesc})
+         for j in range(len(result[i])):
+              print(result[i][j])
+    json={
+     "current": 1,
+     "rowCount": 10,
+    "rows":rows ,
+     "total":  getRowCount('rooms')}
+    return json
 @route('/makeRoom')
 def makeRoom():
     roonname=request.query['roonname']

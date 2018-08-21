@@ -221,8 +221,8 @@ $("#AddRoom").trigger({ type: "click" });
         $scope.room ={};
         console.log(response)
          $('#smartHomeModal').modal('hide');
-          var divContent='<div  class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong id="AlertStrong">Danger!</strong> <span id="AlertSpan">This alert box could indicate a dangerous or potentially negative action.</span>  </div>';
-      $rootScope.gpioFunctions.ShowAlert('Response Success','Good time',divContent);
+       var successDiv='<div class="alert alert-success"> <button type="button" class="close" data-dismiss="alert">&times;</button>  <strong>Success!</strong><span id="AlertStrong"> Indicates a successful or positive action.	</span>	</div>';
+		  $rootScope.gpioFunctions.ShowAlert('Response Success','Good time',successDiv);
    
        
     }).catch(function onError(response) {
@@ -264,7 +264,7 @@ var grid = $("#room-grid-data").bootgrid({
             id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
         };
     },
-    url: "/api/data/basic",
+    url: "/getRoomBootGrid",
     formatters: {
         "commands": function(column, row)
         {
