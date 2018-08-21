@@ -44,6 +44,18 @@ def getValOut(pinnum):
 def initDB():
   conn = sqlite3.connect('HomeAutomation.db')
   conn.execute("CREATE TABLE IF NOT EXISTS user (id INTEGER PRIMARY KEY, name char(100) NOT NULL, password char(100) NOT NULL , email char(100), phoneno char(12) ,address char(100))")
+  conn.execute("CREATE TABLE IF NOT EXISTS rooms (id INTEGER PRIMARY KEY, roomname char(100) NOT NULL, roomdesc char(100) NOT NULL )")
+  conn.execute("CREATE TABLE IF NOT EXISTS port (id INTEGER PRIMARY KEY, portnamename char(100) NOT NULL, portdesc char(100) NOT NULL,porttype char(100) NOT NULL ,porthdid char(100) NOT NULL)")
+  conn.execute("CREATE TABLE IF NOT EXISTS households (id INTEGER PRIMARY KEY,roomid INTEGER, householdname char(100) NOT NULL, householddesc char(100) NOT NULL,householdport char(100) NOT NULL)")
+  conn.execute("INSERT OR REPLACE INTO port(id, portnamename,portdesc,porttype,porthdid) VALUES(1, 'GPIO56','General purpose I/O port','GPIO','56')")
+  conn.execute("INSERT OR REPLACE INTO port(id, portnamename,portdesc,porttype,porthdid) VALUES(2, 'GPIO122','General purpose I/O port','GPIO','122')")
+  conn.execute("INSERT OR REPLACE INTO port(id, portnamename,portdesc,porttype,porthdid) VALUES(3, 'GPIO123','General purpose I/O port','GPIO','123')")
+  conn.execute("INSERT OR REPLACE INTO port(id, portnamename,portdesc,porttype,porthdid) VALUES(4, 'GPIO124','General purpose I/O port','GPIO','124')")
+  conn.execute("INSERT OR REPLACE INTO port(id, portnamename,portdesc,porttype,porthdid) VALUES(5, 'GPIO125','General purpose I/O port','GPIO','125')") 
+  conn.execute("INSERT OR REPLACE INTO port(id, portnamename,portdesc,porttype,porthdid) VALUES(6, 'GPIO126','General purpose I/O port','GPIO','126')")  
+  conn.execute("INSERT OR REPLACE INTO port(id, portnamename,portdesc,porttype,porthdid) VALUES(7, 'GPIO101','General purpose I/O port','GPIO','101')")
+  conn.execute("INSERT OR REPLACE INTO port(id, portnamename,portdesc,porttype,porthdid) VALUES(8, 'GPIO121','General purpose I/O port','GPIO','121')")  
+  conn.commit()
   print('database initiated')
   
 def _init_():
@@ -120,5 +132,12 @@ def CheckModem():
    response =  ser.read(2)
    ser.close()
    return response
-
+@route('/getPorts')
+def getPorts():
+    conn = sqlite3.connect('HomeAutomation.db')
+    c = conn.cursor()
+    c.execute("SELECT * FROM port ")
+    result = c.fetchall()
+    return str(result)
+    
 run(host='0.0.0.0', port=8080, debug=True)

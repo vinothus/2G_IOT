@@ -16,6 +16,7 @@
 
     <!-- Custom styles for this template -->
     <link href="../static/css/small-business.css" rel="stylesheet">
+     <link href="../static/bootGrid/jquery.bootgrid.css" rel="stylesheet">
 
   </head>
 
@@ -49,9 +50,22 @@
 		   <li   class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/totalswitch">Total Switch</a></li>
         </ul>
             </li>
+            
+             <li   ng-class="menuIndice == 3 ? 'active':''" class="nav-item dropdown">
+              <!--a class="nav-link" href="#">Services</a-->
+			      <a    class="dropdown-toggle nav-link" data-toggle="dropdown" href="">Admin
+        <span class="caret"></span></a>
+        <ul data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" class="dropdown-menu">
+          <li    class="nav-item" ><a ng-click="menuIndice = 3" class="dropdown-item"  href="#!/CreateRoom">Create Room</a></li>
+          <li    class="nav-item"><a ng-click="menuIndice = 3" class="dropdown-item"  href="#!/HouseHolds">Create House Holds</a></li>
+          
+        </ul>
+            </li>
+            
             <li data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" ng-class="menuIndice == 2 ? 'active':''" class="nav-item">
               <a ng-click="menuIndice = 2" class="nav-link" href="#!/contactus">Contact</a>
             </li>
+            
           </ul>
 		   <ul class="nav navbar-nav navbar-right">
       <li data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" class="nav-item" ><a class="nav-link" href="#!/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
@@ -129,6 +143,7 @@
     <script src="../static/vendor/bootstrap/js/bootstrap.min.js"></script>
 	 <script src="../static/angularjs/angular.min.js"></script>
 	 <script src="../static/angularjs/angular-route.js"></script>
+	 <script src="../static/bootGrid/jquery.bootgrid.js"></script>
 <script>
 
 var app = angular.module("smartHome",  ["ngRoute"]); 
@@ -141,6 +156,79 @@ app.controller("controller", function($scope) {
 };   
      
 });
+app.controller('CereateRoom' , function($scope, $http){
+
+console.log('room-grid-data');
+
+var grid = $("#room-grid-data").bootgrid({
+    ajax: true,
+    post: function ()
+    {
+        return {
+            id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
+        };
+    },
+    url: "/api/data/basic",
+    formatters: {
+        "commands": function(column, row)
+        {
+            return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-pencil\"></span></button> " + 
+                "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-trash-o\"></span></button>";
+        }
+    }
+}).on("loaded.rs.jquery.bootgrid", function()
+{
+    /* Executes after data is loaded and rendered */
+    grid.find(".command-edit").on("click", function(e)
+    {
+        alert("You pressed edit on row: " + $(this).data("row-id"));
+    }).end().find(".command-delete").on("click", function(e)
+    {
+        alert("You pressed delete on row: " + $(this).data("row-id"));
+    });
+});
+
+
+
+});
+
+
+app.controller('CereateHouseHolds' , function($scope, $http){
+
+console.log('houseHold-grid-data');
+
+var grid = $("#houseHold-grid-data").bootgrid({
+    ajax: true,
+    post: function ()
+    {
+        return {
+            id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
+        };
+    },
+    url: "/api/data/basic",
+    formatters: {
+        "commands": function(column, row)
+        {
+            return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-pencil\"></span></button> " + 
+                "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-trash-o\"></span></button>";
+        }
+    }
+}).on("loaded.rs.jquery.bootgrid", function()
+{
+    /* Executes after data is loaded and rendered */
+    grid.find(".command-edit").on("click", function(e)
+    {
+        alert("You pressed edit on row: " + $(this).data("row-id"));
+    }).end().find(".command-delete").on("click", function(e)
+    {
+        alert("You pressed delete on row: " + $(this).data("row-id"));
+    });
+});
+
+
+
+});
+
 
 app.controller('GPIOpins', function($scope, $http) {
     $http.get("getGPIO")
@@ -226,7 +314,13 @@ app.config(function($routeProvider) {
         templateUrl : "static/login.htm"
     }).when("/signup", {
         templateUrl : "static/signup.htm"
-    }) ;
+    }).when("/CreateRoom", {
+        templateUrl : "static/createRoom.htm"
+    }).when("/HouseHolds", {
+        templateUrl : "static/HouseHolds.htm"
+    })
+    
+     ;
 });
 </script>
 
