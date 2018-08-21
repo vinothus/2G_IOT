@@ -139,6 +139,15 @@ def getPorts():
     c.execute("SELECT * FROM port ")
     result = c.fetchall()
     return dict(data=result)
+@route('/deletePort')
+def deletePort():
+    id=request.query['id']
+    conn = sqlite3.connect('HomeAutomation.db')
+    c = conn.cursor()
+    c.execute("DELETE  FROM port where id= ?" , (id,))
+    conn.commit()  
+    result = c.fetchall()
+    return dict(data=result)
 @route('/makePorts')
 def makePorts():
     portnamename=request.query['portnamename']
@@ -175,5 +184,43 @@ def makeRoom():
     conn.commit()    
 
     return dict(data=new_id)
+@route('/deleteRoom')
+def deleteRoom():
+    id=request.query['id']
+    conn = sqlite3.connect('HomeAutomation.db')
+    c = conn.cursor()
+    c.execute("DELETE  FROM rooms where id= ?" , (id,))
+    conn.commit()  
+    result = c.fetchall()
+    return dict(data=result)
+@route('/getHouseholds')
+def getHouseholds():
+    conn = sqlite3.connect('HomeAutomation.db')
+    c = conn.cursor()
+    c.execute("SELECT * FROM households ")
+    result = c.fetchall()
+    return dict(data=result)    
+@route('/makeHouseholds')
+def makeHouseholds():
+    roomid=request.query['roomid']
+    householdname=request.query['householdname']
+    householddesc=request.query['householddesc']
+    householdport=request.query['householdport']
     
+    conn = sqlite3.connect('HomeAutomation.db')
+    c = conn.cursor()
+    c.execute("INSERT OR REPLACE INTO Households(roomid,householdname,householddesc,householdport) VALUES (?,?,?,?)", (roomid,householdname,householddesc,householdport))
+    new_id = c.lastrowid
+
+    conn.commit()    
+    return dict(data=new_id)
+@route('/deleteHouseholds')
+def deleteHouseholds():
+    id=request.query['id']
+    conn = sqlite3.connect('HomeAutomation.db')
+    c = conn.cursor()
+    c.execute("DELETE  FROM Households where id= ?" , (id,))
+    conn.commit()  
+    result = c.fetchall()
+    return dict(data=result)
 run(host='0.0.0.0', port=8080, debug=True)
