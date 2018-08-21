@@ -139,5 +139,41 @@ def getPorts():
     c.execute("SELECT * FROM port ")
     result = c.fetchall()
     return dict(data=result)
+@route('/makePorts')
+def makePorts():
+    portnamename=request.query['portnamename']
+    portdesc=request.query['portdesc']
+    porttype=request.query['porttype']
+    porthdid=request.query['porthdid']
+    
+    conn = sqlite3.connect('HomeAutomation.db')
+    c = conn.cursor()
+    c.execute("INSERT OR REPLACE INTO port(portnamename,portdesc,porttype,porthdid) VALUES(?,?,?,?)", (portnamename,portdesc,porttype,porthdid))
+    
+    new_id = c.lastrowid
+
+    conn.commit()    
+
+    return dict(data=new_id)
+@route('/getRooms')
+def getRooms():
+    conn = sqlite3.connect('HomeAutomation.db')
+    c = conn.cursor()
+    c.execute("SELECT * FROM rooms ")
+    result = c.fetchall()
+    return dict(data=result)
+@route('/makeRoom')
+def makeRoom():
+    roonname=request.query['roonname']
+    roomdesc=request.query['roomdesc']
+    
+    conn = sqlite3.connect('HomeAutomation.db')
+    c = conn.cursor()
+    c.execute("INSERT OR REPLACE INTO rooms(roomname,roomdesc) VALUES (?,?)", (roonname,roomdesc))
+    new_id = c.lastrowid
+
+    conn.commit()    
+
+    return dict(data=new_id)
     
 run(host='0.0.0.0', port=8080, debug=True)

@@ -148,6 +148,7 @@
 <script>
 
 var app = angular.module("smartHome",  ["ngRoute"]); 
+
  var progress;
 app.controller("controller", function($scope) {
      
@@ -199,6 +200,10 @@ var grid = $("#port-grid-data").bootgrid({
 app.controller('CereateRoom' , function($scope, $http){
 
 console.log('room-grid-data');
+
+
+ 
+
 
 var grid = $("#room-grid-data").bootgrid({
     ajax: true,
@@ -277,6 +282,12 @@ app.controller('GPIOpins', function($scope, $http) {
         $scope.gpios =response.data;
        
     });
+     $scope.DBFunctions = {};
+     $scope.DBFunctions.saveRoom=function()
+     {
+     console.log($scope.roomname);
+     console.log($scope.roomdesc);
+     }
               $scope.gpioFunctions = {};
                $scope.gpioFunctions.ShowAlert=function(StrongMsg,Msg,divContent)
                {
