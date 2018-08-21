@@ -149,6 +149,18 @@
 
 var app = angular.module("smartHome",  ["ngRoute"]); 
 
+app.run(function($rootScope) {
+$rootScope.gpioFunctions={};
+ $rootScope.gpioFunctions.ShowAlert=function(StrongMsg,Msg,divContent)
+               {
+               console.log('Alert');
+               $('#Alert').html(divContent);
+               $('#Alert').show();
+               $('#AlertStrong').html(StrongMsg);
+               $('#AlertSpan').html(Msg);
+               } 
+ });
+ 
  var progress;
 app.controller("controller", function($scope) {
      
@@ -196,12 +208,35 @@ var grid = $("#port-grid-data").bootgrid({
 
 
 });
-app.controller('CereateRoomModal' , function($scope, $http){
+app.controller('CereateRoomModal' , function($rootScope,$scope, $http){
 
 $scope.saveRoom=function(room)
 {
+ $('#smartHomeModal').modal('show');
 console.log(room);
-
+$("#AddRoom").trigger({ type: "click" });
+  $http.get("makeRoom?roonname="+room.name+"&roomdesc="+room.desc)
+    .then(function(response) {
+    console.log();
+        $scope.room ={};
+        console.log(response)
+         $('#smartHomeModal').modal('hide');
+          var divContent='<div  class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong id="AlertStrong">Danger!</strong> <span id="AlertSpan">This alert box could indicate a dangerous or potentially negative action.</span>  </div>';
+      $rootScope.gpioFunctions.ShowAlert('Response Success','Good time',divContent);
+   
+       
+    }).catch(function onError(response) {
+    // Handle error
+    var data = response.data;
+    var status = response.status;
+    var statusText = response.statusText;
+    var headers = response.headers;
+    var config = response.config;
+    $('#smartHomeModal').modal('hide');
+    var divContent='<div  class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong id="AlertStrong">Danger!</strong> <span id="AlertSpan">This alert box could indicate a dangerous or potentially negative action.</span>  </div>';
+      $rootScope.gpioFunctions.ShowAlert('Response Fails','Please try after some time',divContent);
+     }) 
+    ;
 
 }
 
@@ -215,7 +250,9 @@ app.controller('CereateRoom' , function($scope, $http){
 
 console.log('room-grid-data');
 $scope.openRoom=function()
- { var dlgElem = angular.element("#addRoomDlg");
+ { 
+ var dlgElem = angular.element("#AddRoom");
+ 
   
 }
 
