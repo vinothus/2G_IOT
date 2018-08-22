@@ -70,8 +70,8 @@
             
           </ul>
 		   <ul class="nav navbar-nav navbar-right">
-      <li data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" class="nav-item" ><a class="nav-link" href="#!/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-      <li data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" class="nav-item" ><a class="nav-link" href="#!/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      <li data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" class="nav-item" ><a class="nav-link" href="#!/signup"><span class="fa fa-user"></span> Sign Up</a></li>
+      <li data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" class="nav-item" ><a class="nav-link" href="#!/login"><span class="fa fa-sign-in"></span> Login</a></li>
     </ul>
          <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
