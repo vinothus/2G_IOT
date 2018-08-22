@@ -16,6 +16,7 @@
 
     <!-- Custom styles for this template -->
     <link href="../static/css/small-business.css" rel="stylesheet">
+    <link href="../static/css/font-awesome.min.css" rel="stylesheet">
      <link href="../static/bootGrid/jquery.bootgrid.css" rel="stylesheet">
 
   </head>
