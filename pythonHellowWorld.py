@@ -253,8 +253,8 @@ def deleteHouseholds():
     return dict(data=result)
 @route('/listenSpeech')
 def listenSpeech():
-    import android
-    droid = android.Android()
-    (id, result, error) = droid.recognizeSpeech("Say something")
-    return result+" "+error
+    import sl4a 
+    import time
+    droid = sl4a.Android()
+    return droid.recognizeSpeech('Speak Now',None,None)[1]
 run(host='0.0.0.0', port=8080, debug=True)
