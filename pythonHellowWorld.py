@@ -127,7 +127,7 @@ def runs():
 @route('/CheckModem')
 def CheckModem():
    path=request.query['path']
-   ser = serial.Serial(path, 115200, timeout=5)
+   ser = serial.Serial(path, 9600, timeout=5)
    ser.write(str.encode('AT\r'))
    response =  ser.read(2)
    ser.close()
