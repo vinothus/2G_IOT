@@ -128,8 +128,8 @@ def runs():
 def CheckModem():
    path=request.query['path']
    ser = serial.Serial(path, 9600, timeout=5)
-   ser.write(str.encode('AT\r'))
-   response =  ser.read(2)
+   ser.write(str.encode('ATE0\r'))
+   response =  ser.read(4)
    ser.close()
    return response
 @route('/getPorts')
