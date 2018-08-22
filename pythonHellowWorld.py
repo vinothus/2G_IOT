@@ -251,4 +251,10 @@ def deleteHouseholds():
     conn.commit()  
     result = c.fetchall()
     return dict(data=result)
+@route('/listenSpeech')
+def listenSpeech():
+    import android
+    droid = android.Android()
+    (id, result, error) = droid.recognizeSpeech("Say something")
+    return result+" "+error
 run(host='0.0.0.0', port=8080, debug=True)
