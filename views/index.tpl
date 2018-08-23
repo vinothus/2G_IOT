@@ -46,8 +46,8 @@
           <li    class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/bedroom1"><i class="fa fa-bed" aria-hidden="true"></i>Bed Room 1</a></li>
           <li   class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/bedroom2"><i class="fa fa-bed" aria-hidden="true"></i>Bed Room 2</a></li>
 		  <li   class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"   href="#!/powerroom"><i class="fa fa-power-off" aria-hidden="true"></i>Power Room</a></li>
-		  <li    class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/kitchen"><i class="fa fa-spoon" aria-hidden="true"></i> Kitchen</a></li>
-		  <li   class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/bathroom"><i class="fa fa-shower" aria-hidden="true"></i>Bath room</a></li>
+		  <li    class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/kitchen"><i class="fa fa-fire" aria-hidden="true"></i> Kitchen</a></li>
+		  <li   class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/bathroom"><i class="fa fa-bath" aria-hidden="true"></i>Bath room</a></li>
 		   <li   class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/totalswitch"><i class="fa fa-microchip" aria-hidden="true"></i>Total Switch</a></li>
         </ul>
             </li>
@@ -57,9 +57,9 @@
 			      <a    class="dropdown-toggle nav-link" data-toggle="dropdown" href=""> <span class="fa fa-user-circle-o" aria-hidden="true"></span> Admin
         <span class="caret"></span></a>
         <ul data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" class="dropdown-menu">
-          <li    class="nav-item" ><a ng-click="menuIndice = 3" class="dropdown-item"  href="#!/CreateRoom">Create Room</a></li>
-          <li    class="nav-item"><a ng-click="menuIndice = 3" class="dropdown-item"  href="#!/HouseHolds">Create House Holds</a></li>
-          <li    class="nav-item"><a ng-click="menuIndice = 3" class="dropdown-item"  href="#!/Ports">Create Ports</a></li>
+          <li    class="nav-item" ><a ng-click="menuIndice = 3" class="dropdown-item"  href="#!/CreateRoom"><i class="fa fa-building" aria-hidden="true"></i>Create Room</a></li>
+          <li    class="nav-item"><a ng-click="menuIndice = 3" class="dropdown-item"  href="#!/HouseHolds"><i class="fa fa-cogs" aria-hidden="true"></i>Create House Holds</a></li>
+          <li    class="nav-item"><a ng-click="menuIndice = 3" class="dropdown-item"  href="#!/Ports"><i class="fa fa-plug" aria-hidden="true"></i>Create Ports</a></li>
           
         </ul>
             </li>
