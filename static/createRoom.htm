@@ -42,7 +42,21 @@
                     <label for="roomdesc" class="control-label">Room Description:</label>
                     <input type="text" class="form-control" id="room.desc" name="room.desc"  ng-model="room.desc" />
                   </div>
+                  <div class="form-group">
+                    <label for="uiicon" class="control-label">UI Icon:</label>
+                    <input type="text" class="form-control" id="room.uiicon" name="room.uiicon"  ng-model="room.uiicon" />
+                   
+					     
+			        
+					<select ng-change="changedValue(iconselected)" ng-model="iconselected" class="form-control"   ng-model="selectedIcon">
+      				  <option value="">Select Account</option>
+      				  <option 
+           				ng-repeat="icon in icons"      value="{{icon}}" data-content="<i class='fa fa-cutlery'></i> Cutlery">{{icon}}</option>
+			        </select>
+			        <label>Current Icon <span  id="iconShowcase" class="fa fa-microchip" aria-hidden="true"></span></label>
+    				 
     
+                  </div>
                 
             </div>
             </form>
