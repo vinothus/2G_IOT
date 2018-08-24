@@ -179,7 +179,7 @@ var grid = $("#houseHold-grid-data").bootgrid({
 
 
 app.controller('GPIOpins', function($scope, $http) {
-    $http.get("getGPIO")
+    $http.get("/getGPIO")
     .then(function(response) {
     console.log();
         $scope.gpios =response.data;
@@ -239,49 +239,83 @@ app.controller('GPIOpins', function($scope, $http) {
 app.config(function($routeProvider) {
     $routeProvider
     .when("/", {
-        templateUrl : "static/main.htm"
+        templateUrl : "main.htm",
+            controller: 'main'
     })
     .when("/bedroom1", {
-        templateUrl : "static/bedRoom1.htm"
+        templateUrl : "bedRoom1.htm"
     })
     .when("/bedroom2", {
-        templateUrl : "static/bedRoom2.htm"
+        templateUrl : "bedRoom2.htm"
     })
     .when("/powerroom", {
-        templateUrl : "static/powerRoom.htm"
+        templateUrl : "powerRoom.htm"
     })
      .when("/totalswitch", {
-        templateUrl : "static/totalswitch.htm"
+        templateUrl : "totalswitch.htm"
     })
     .when("/livinghall", {
-        templateUrl : "static/livingHall.htm"
+        templateUrl : "livingHall.htm"
     })
      .when("/bathroom", {
-        templateUrl : "static/bathRoom.htm"
+        templateUrl : "bathRoom.htm"
     })
      .when("/kitchen", {
-        templateUrl : "static/kitchen.htm"
+        templateUrl : "kitchen.htm"
     })
     .when("/contactus", {
-        templateUrl : "static/contactus.htm"
+        templateUrl : "contactus.htm"
     }).when("/login", {
-        templateUrl : "static/login.htm"
+        templateUrl : "login.htm"
     }).when("/signup", {
-        templateUrl : "static/signup.htm"
+        templateUrl : "signup.htm"
     }).when("/CreateRoom", {
-        templateUrl : "static/createRoom.htm"
+        templateUrl : "createRoom.htm"
     }).when("/HouseHolds", {
-        templateUrl : "static/HouseHolds.htm"
+        templateUrl : "HouseHolds.htm"
     }).when("/Ports", {
-        templateUrl : "static/Ports.htm"
+        templateUrl : "Ports.htm"
     }).when("/dynamic/:id", {
         templateUrl :  function(params){ return '/houseHolds?roomid=' + params.id; },
-            controller: 'roomctrl'
+            controller: 'houseHolds'
        
     });
 });
 
-app.controller('roomctrl',  function($scope, $route, $routeParams){
+app.controller('houseHolds',  function($scope, $route, $routeParams, $http){
     $scope.id = "Your ID is " + $routeParams.id;
     console.log($scope.id);
+    
+      $http.get("/getRooms")
+    .then(function(response) {
+    console.log();
+        $scope.gpios =response.data;
+       
+    });
+});
+app.controller('main',  function($scope, $route, $routeParams, $http){
+    $scope.id = "Your ID is " + $routeParams.id;
+    console.log($scope.id);
+    console.log( $scope.roomsof);
+      $http.get("/getRooms")
+    .then(function(response) {
+    console.log();
+        $scope.rooms =response.data;
+       console.log( $scope.rooms);
+    });   
+});
+
+$( document ).ready(function() {
+    console.log( "ready!" );
+    
+     $.ajax({url: "/getRooms", success: function(result){
+        $.each(result.data, function( index, value ) {
+        console.log( "index "+index + ": value " + value );
+        $("#rooms").append('<li   class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/dynamic/'+value[0]+'"><i class="fa fa-microchip" aria-hidden="true"></i>'+value[1]+'</a></li>');
+        });
+        //<li   class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/dynamic/1"><i class="fa fa-microchip" aria-hidden="true"></i>Dynamic</a></li>
+    }});
+    
+    
+    
 });
