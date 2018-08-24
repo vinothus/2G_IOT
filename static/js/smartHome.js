@@ -274,5 +274,8 @@ app.config(function($routeProvider) {
         templateUrl : "static/HouseHolds.htm"
     }).when("/Ports", {
         templateUrl : "static/Ports.htm"
-    });
+    }).when("/dynamic", {
+        templateUrl : "houseHolds?roomid=1"
+    })
+    ;
 });

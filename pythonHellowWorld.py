@@ -46,7 +46,7 @@ def initDB():
   conn.execute("CREATE TABLE IF NOT EXISTS user (id INTEGER PRIMARY KEY, name char(100) NOT NULL, password char(100) NOT NULL , email char(100), phoneno char(12) ,address char(100))")
   conn.execute("CREATE TABLE IF NOT EXISTS rooms (id INTEGER PRIMARY KEY, roomname char(100) NOT NULL, roomdesc char(100) NOT NULL )")
   conn.execute("CREATE TABLE IF NOT EXISTS port (id INTEGER PRIMARY KEY, portnamename char(100) NOT NULL, portdesc char(100) NOT NULL,porttype char(100) NOT NULL ,porthdid char(100) NOT NULL)")
-  conn.execute("CREATE TABLE IF NOT EXISTS households (id INTEGER PRIMARY KEY,roomid INTEGER, householdname char(100) NOT NULL, householddesc char(100) NOT NULL,householdport INTEGER NOT NULL)")
+  conn.execute("CREATE TABLE IF NOT EXISTS households (id INTEGER PRIMARY KEY,roomid INTEGER, householdname char(100) NOT NULL, householddesc char(100) NOT NULL,householdport INTEGER NOT NULL ,uiicon char(100))")
   conn.execute("INSERT OR REPLACE INTO port(id, portnamename,portdesc,porttype,porthdid) VALUES(1, 'GPIO56','General purpose I/O port','GPIO','56')")
   conn.execute("INSERT OR REPLACE INTO port(id, portnamename,portdesc,porttype,porthdid) VALUES(2, 'GPIO122','General purpose I/O port','GPIO','122')")
   conn.execute("INSERT OR REPLACE INTO port(id, portnamename,portdesc,porttype,porthdid) VALUES(3, 'GPIO123','General purpose I/O port','GPIO','123')")
@@ -62,7 +62,7 @@ def deleteTable(tableName):
   conn.execute("DROP TABLE "+tableName)
   print('Dropped Table : '+tableName)
   conn.commit()
-  return True
+  return 'done'
 def _init_():
   try:
      print('init script')
@@ -110,7 +110,7 @@ def houseHolds():
     roomid=request.query['roomid']
     conn = sqlite3.connect('HomeAutomation.db')
     c = conn.cursor()
-    c.execute("SELECT h.* FROM households h join  port p where h.roomid = ? and p.id=h.householdport ", (roomid,))
+    c.execute("SELECT h.* ,p.* FROM households h join  port p where h.roomid = ? and p.id=h.householdport ", (roomid,))
     result = c.fetchall()
     return {'roomname':'BathRoom','roomid':roomid ,'result':result}	
 @route('/')
@@ -251,10 +251,11 @@ def makeHouseholds():
     householdname=request.query['householdname']
     householddesc=request.query['householddesc']
     householdport=request.query['householdport']
+    uiicon=request.query['uiicon']
     
     conn = sqlite3.connect('HomeAutomation.db')
     c = conn.cursor()
-    c.execute("INSERT OR REPLACE INTO Households(roomid,householdname,householddesc,householdport) VALUES (?,?,?,?)", (roomid,householdname,householddesc,householdport))
+    c.execute("INSERT OR REPLACE INTO Households(roomid,householdname,householddesc,householdport,uiicon) VALUES (?,?,?,?,?)", (roomid,householdname,householddesc,householdport,uiicon))
     new_id = c.lastrowid
 
     conn.commit()    
