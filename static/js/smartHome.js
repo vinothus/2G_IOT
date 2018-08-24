@@ -274,8 +274,14 @@ app.config(function($routeProvider) {
         templateUrl : "static/HouseHolds.htm"
     }).when("/Ports", {
         templateUrl : "static/Ports.htm"
-    }).when("/dynamic", {
-        templateUrl : "houseHolds?roomid=1"
-    })
-    ;
+    }).when("/dynamic/:id", {
+        templateUrl :  function(params){ return '/houseHolds?roomid=' + params.id; },
+            controller: 'roomctrl'
+       
+    });
+});
+
+app.controller('roomctrl',  function($scope, $route, $routeParams){
+    $scope.id = "Your ID is " + $routeParams.id;
+    console.log($scope.id);
 });

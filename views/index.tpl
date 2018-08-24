@@ -49,7 +49,7 @@
 		  <li    class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/kitchen"><i class="fa fa-fire" aria-hidden="true"></i> Kitchen</a></li>
 		  <li   class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/bathroom"><i class="fa fa-bath" aria-hidden="true"></i>Bath room</a></li>
 		   <li   class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/totalswitch"><i class="fa fa-microchip" aria-hidden="true"></i>Total Switch</a></li>
-		   <li   class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/dynamic"><i class="fa fa-microchip" aria-hidden="true"></i>Dynamic</a></li>
+		   <li   class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/dynamic/1"><i class="fa fa-microchip" aria-hidden="true"></i>Dynamic</a></li>
         </ul>
             </li>
             
