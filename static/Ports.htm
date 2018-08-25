@@ -1,7 +1,7 @@
 <div  ng-controller="CereatePort">
 
  <div class="row">
- <div class="pull-right"><button class="btn btn-primary" data-toggle="modal" data-target="#AddPort" id="command-add" data-row-id="0">
+ <div class="pull-right"><button  ng-click="openPort()" class="btn btn-primary" data-toggle="modal" data-target="#AddPort" id="command-add" data-row-id="0">
  <span class="fa fa-plus"></span> Create Port</button></div></div>
  
  
@@ -36,19 +36,19 @@
                 <input type="hidden" value="add" name="action" id="action">
                   <div class="form-group">
                     <label for="portname" class="control-label">Port Name:</label>
-                    <input type="text" class="form-control" id="portname" name="portname"/>
+                    <input type="text" class="form-control" id="portname" ng-model="p.name" name="portname"/>
                   </div>
                   <div class="form-group">
                     <label for="portdesc" class="control-label">Port Description:</label>
-                    <input type="text" class="form-control" id="portdesc" name="portdesc"/>
+                    <input type="text" class="form-control" id="portdesc" ng-model="p.desc" name="portdesc"/>
                   </div>
    				  <div class="form-group">
                     <label for="porttype" class="control-label">Port Type:</label>
-                    <input type="text" class="form-control" id="porttype" name="porttype"/>
+                    <input type="text" class="form-control" id="porttype" ng-model="p.type"  name="porttype"/>
                   </div>
                 <div class="form-group">
                     <label for="porthdid" class="control-label">Port Hardware ID:</label>
-                    <input type="text" class="form-control" id="porthdid" name="porthdid"/>
+                    <input type="text" class="form-control" id="porthdid" ng-model="p.hid"  name="porthdid"/>
                   </div>
             </div>
             </form>
@@ -56,7 +56,7 @@
       <!-- Modal footer -->
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-         <button type="button" id="btn_add" class="btn btn-primary">Save</button>
+         <button ng-click="savePort(p)" type="button" id="btn_add" class="btn btn-primary">Save</button>
       </div>
 
     </div>

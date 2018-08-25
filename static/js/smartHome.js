@@ -26,7 +26,49 @@ app.controller("controller", function($scope) {
 
 
 
-app.controller('CereatePort' , function($scope, $http){
+app.controller('CereatePort' , function($scope, $http,$compile,$rootScope){
+
+$scope.savePort=function(p)
+{
+
+			$('#smartHomeModal').modal('show');
+			console.log(p);
+			$("#AddPort").trigger({ type: "click" });
+			  $http.get("/makePorts?portnamename="+p.name+"&portdesc="+p.desc+"&porttype="+p.type+"&porthdid="+p.hid)
+			    .then(function(response) {
+			    console.log();
+			        $scope.room ={};
+			        console.log(response)
+			         $('#smartHomeModal').modal('hide');
+			          $('#AddPort').modal('hide');
+			       var successDiv='<div class="alert alert-success"> <button type="button" class="close" data-dismiss="alert">&times;</button>  <strong>Success!</strong><span id="AlertStrong"> Indicates a successful or positive action.	</span>	</div>';
+					  $rootScope.gpioFunctions.ShowAlert('Response Success','Good time',successDiv);
+			   $("#port-grid-data").bootgrid('reload');
+			       
+			    }).catch(function onError(response) {
+			    // Handle error
+			    var data = response.data;
+			    var status = response.status;
+			    var statusText = response.statusText;
+			    var headers = response.headers;
+			    var config = response.config;
+			    $('#smartHomeModal').modal('hide');
+			    var divContent='<div  class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong id="AlertStrong">Danger!</strong> <span id="AlertSpan">This alert box could indicate a dangerous or potentially negative action.</span>  </div>';
+			      $rootScope.gpioFunctions.ShowAlert('Response Fails','Please try after some time',divContent);
+			     }) 
+			    ;
+
+
+}
+
+$scope.openPort=function()
+ { 
+ var dlgElem = angular.element("#AddPort");
+  $compile(dlgElem)($scope);
+ 
+  
+}
+
 
 console.log('port-grid-data');
 
@@ -51,10 +93,30 @@ var grid = $("#port-grid-data").bootgrid({
     /* Executes after data is loaded and rendered */
     grid.find(".command-edit").on("click", function(e)
     {
+      
         alert("You pressed edit on row: " + $(this).data("row-id"));
+        
+        
     }).end().find(".command-delete").on("click", function(e)
     {
-        alert("You pressed delete on row: " + $(this).data("row-id"));
+         if (confirm("Please confirm to delete")) {
+        $('#smartHomeModal').modal('show');
+      $http.get("/deletePort?id="+  $(this).data("row-id"))
+    .then(function(response) {
+        $('#smartHomeModal').modal('hide');
+           $("#port-grid-data").bootgrid('reload');
+        
+    })
+    .catch(function onError(response) {
+    
+    $('#smartHomeModal').modal('hide');
+    var divContent='<div  class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong id="AlertStrong">Danger!</strong> <span id="AlertSpan">This alert box could indicate a dangerous or potentially negative action.</span>  </div>';
+       $rootScope.gpioFunctions.ShowAlert('Response Fails','Please try after some time',divContent);
+     });
+         
+    
+
+    }
     });
 });
 
