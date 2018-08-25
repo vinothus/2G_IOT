@@ -941,7 +941,7 @@ $scope.openRoom=function()
 $scope.editRoom=function()
  { 
  var dlgElem = angular.element("#ModifyRoom");
- 
+  $compile(dlgElem)($scope);
   
 }
 var grid = $("#room-grid-data").bootgrid({
@@ -1031,8 +1031,48 @@ var grid = $("#room-grid-data").bootgrid({
 });
 
 
-app.controller('CereateHouseHolds' , function($scope, $http){
-
+app.controller('CereateHouseHolds' , function($scope, $http, $compile,$rootScope){
+         
+			         
+			 $scope.saveHH=function(hh)
+			{
+			 $('#smartHomeModal').modal('show');
+			console.log(hh);
+			$("#AddHouseHold").trigger({ type: "click" });
+			  $http.get("/makeHouseholds?roomid="+hh.roomid+"&householdname="+hh.householdname+"&uiicon="+hh.uiicon+"&householddesc="+hh.householddesc+"&householdport="+hh.householdport)
+			    .then(function(response) {
+			    console.log();
+			        $scope.room ={};
+			        console.log(response)
+			         $('#smartHomeModal').modal('hide');
+			          $('#AddHouseHold').modal('hide');
+			       var successDiv='<div class="alert alert-success"> <button type="button" class="close" data-dismiss="alert">&times;</button>  <strong>Success!</strong><span id="AlertStrong"> Indicates a successful or positive action.	</span>	</div>';
+					  $rootScope.gpioFunctions.ShowAlert('Response Success','Good time',successDiv);
+			   $("#houseHold-grid-data").bootgrid('reload');
+			       
+			    }).catch(function onError(response) {
+			    // Handle error
+			    var data = response.data;
+			    var status = response.status;
+			    var statusText = response.statusText;
+			    var headers = response.headers;
+			    var config = response.config;
+			    $('#smartHomeModal').modal('hide');
+			    var divContent='<div  class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong id="AlertStrong">Danger!</strong> <span id="AlertSpan">This alert box could indicate a dangerous or potentially negative action.</span>  </div>';
+			      $rootScope.gpioFunctions.ShowAlert('Response Fails','Please try after some time',divContent);
+			     }) 
+			    ;
+			  
+			}
+         
+         
+         $scope.openHH=function()
+			 { 
+			 var dlgElem = angular.element("#AddHouseHold");
+			 
+			   $compile(dlgElem)($scope);
+			}
+         
 console.log('houseHold-grid-data');
 
 var grid = $("#houseHold-grid-data").bootgrid({
@@ -1059,8 +1099,24 @@ var grid = $("#houseHold-grid-data").bootgrid({
         alert("You pressed edit on row: " + $(this).data("row-id"));
     }).end().find(".command-delete").on("click", function(e)
     {
-        if (confirm("sure to delete")) {
-         alert("You pressed delete on row: " + $(this).data("row-id"));
+        
+     if (confirm("Please confirm to delete")) {
+        $('#smartHomeModal').modal('show');
+      $http.get("/deleteHouseholds?id="+  $(this).data("row-id"))
+    .then(function(response) {
+        $('#smartHomeModal').modal('hide');
+          $("#houseHold-grid-data").bootgrid('reload');
+        
+    })
+    .catch(function onError(response) {
+    
+    $('#smartHomeModal').modal('hide');
+    var divContent='<div  class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong id="AlertStrong">Danger!</strong> <span id="AlertSpan">This alert box could indicate a dangerous or potentially negative action.</span>  </div>';
+       $rootScope.gpioFunctions.ShowAlert('Response Fails','Please try after some time',divContent);
+     });
+         
+    
+
     }
      
     });
