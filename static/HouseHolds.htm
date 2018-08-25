@@ -8,12 +8,12 @@
 <table id="houseHold-grid-data" class="table table-condensed table-hover table-striped">
     <thead>
         <tr>
-            <th data-column-id="id" data-type="numeric">ID</th>
-            <th data-column-id="roomid">House Hold name</th>
-            <th data-column-id="householdname" data-order="desc">House Hold Type</th>
-            <th data-column-id="householddesc" data-order="desc">House Hold Description</th>
-            <th data-column-id="householdport" data-order="desc">House Hold Port</th>
-             <th data-column-id="uiicon" data-order="desc">House Hold UI Icon</th>
+            <th data-column-id="id" data-type="numeric">House Hold ID</th>
+            <th data-column-id="roomid">Room ID</th>
+            <th data-column-id="householdname" data-order="desc">Name</th>
+            <th data-column-id="householddesc" data-order="desc">Description</th>
+            <th data-column-id="householdport" data-order="desc">Port ID</th>
+             <th data-column-id="uiicon" data-order="desc">UI Icon</th>
             <th data-column-id="commands" data-formatter="commands" data-sortable="false">Action</th>
         </tr>
     </thead>
@@ -37,27 +37,33 @@
                 <input type="hidden" value="add" name="action" id="action">
                   <div class="form-group">
                     <label for="householdname" class="control-label">House Hold Name:</label>
-                    <input type="text" class="form-control" id="householdname" name="householdname"/>
+                    <input type="text" class="form-control" id="householdname" ng-model="hh.householdname" name="householdname"/>
                   </div>
                   <div class="form-group">
-                    <label for="householdtype" class="control-label">House Hold Type:</label>
-                    <input type="text" class="form-control" id="householdtype" name="householdtype"/>
+                    <label for="householdtype" class="control-label">Type:</label>
+                    <input type="text" class="form-control" id="householdtype" ng-model="hh.householdtype"  name="householdtype"/>
                   </div>
                   <div class="form-group">
-                    <label for="householddesc" class="control-label">House Hold Description:</label>
-                    <input type="text" class="form-control" id="householddesc" name="householddesc"/>
+                    <label for="householddesc" class="control-label">Description:</label>
+                    <input type="text" class="form-control" id="householddesc" ng-model="hh.householddesc"   name="householddesc"/>
                   </div>
                  <div class="form-group">
-                    <label for="householdport" class="control-label">House Hold Port:</label>
-                    <input type="text" class="form-control" id="householdport" name="householdport"/>
+                    <label for="householdport" class="control-label">Port:</label>
+                    <input type="text" class="form-control" id="householdport" ng-model="hh.householdport" name="householdport"/>
                   </div>
+                  
+                  <div class="form-group">
+                    <label for="householdport" class="control-label">UI ICon:</label>
+                    <input type="text" class="form-control" id="uiicon"  ng-model="hh.uiicon"   name="uiicon"/>
+                  </div>
+                  
             </div>
             </form>
 
       <!-- Modal footer -->
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-         <button type="button" id="btn_add" class="btn btn-primary">Save</button>
+         <button  ng-click="saveHH(hh)" type="button" id="btn_add" class="btn btn-primary">Save</button>
       </div>
 
     </div>
