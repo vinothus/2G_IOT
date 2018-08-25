@@ -872,7 +872,7 @@ $("#AddRoom").trigger({ type: "click" });
          $('#smartHomeModal').modal('hide');
        var successDiv='<div class="alert alert-success"> <button type="button" class="close" data-dismiss="alert">&times;</button>  <strong>Success!</strong><span id="AlertStrong"> Indicates a successful or positive action.	</span>	</div>';
 		  $rootScope.gpioFunctions.ShowAlert('Response Success','Good time',successDiv);
-   
+   $("#room-grid-data").bootgrid('reload');
        
     }).catch(function onError(response) {
     // Handle error
@@ -886,7 +886,7 @@ $("#AddRoom").trigger({ type: "click" });
       $rootScope.gpioFunctions.ShowAlert('Response Fails','Please try after some time',divContent);
      }) 
     ;
-
+  
 }
 
   $scope.modalCloseButtonClick = function () {
@@ -928,10 +928,27 @@ var grid = $("#room-grid-data").bootgrid({
     /* Executes after data is loaded and rendered */
     grid.find(".command-edit").on("click", function(e)
     {
+        
         alert("You pressed edit on row: " + $(this).data("row-id"));
+        console.log($(this));
+        
     }).end().find(".command-delete").on("click", function(e)
     {
-        alert("You pressed delete on row: " + $(this).data("row-id"));
+      if (confirm("Please confirm to delete")) {
+        $('#smartHomeModal').modal('show');
+      $http.get("/deleteRoom?id="+  $(this).data("row-id"))
+    .then(function(response) {
+        $('#smartHomeModal').modal('hide');
+        
+    })
+    .catch(function onError(response) {
+    
+    $('#smartHomeModal').modal('hide');
+    var divContent='<div  class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong id="AlertStrong">Danger!</strong> <span id="AlertSpan">This alert box could indicate a dangerous or potentially negative action.</span>  </div>';
+       $rootScope.gpioFunctions.ShowAlert('Response Fails','Please try after some time',divContent);
+     });
+         
+    }
     });
 });
 
@@ -968,7 +985,10 @@ var grid = $("#houseHold-grid-data").bootgrid({
         alert("You pressed edit on row: " + $(this).data("row-id"));
     }).end().find(".command-delete").on("click", function(e)
     {
-        alert("You pressed delete on row: " + $(this).data("row-id"));
+        if (confirm("sure to delete")) {
+         alert("You pressed delete on row: " + $(this).data("row-id"));
+    }
+     
     });
 });
 
