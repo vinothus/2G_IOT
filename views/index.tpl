@@ -61,9 +61,7 @@
           <li    class="nav-item" ><a ng-click="menuIndice = 3" class="dropdown-item"  href="#!/CreateRoom"><i class="fa fa-building" aria-hidden="true"></i>Create Room</a></li>
           <li    class="nav-item"><a ng-click="menuIndice = 3" class="dropdown-item"  href="#!/HouseHolds"><i class="fa fa-cogs" aria-hidden="true"></i>Create House Holds</a></li>
           <li    class="nav-item"><a ng-click="menuIndice = 3" class="dropdown-item"  href="#!/Ports"><i class="fa fa-plug" aria-hidden="true"></i>Create Ports</a></li>
-           <li ng-repeat=" room in rooms" >
-      	  {{ room }}
-     		 </li>
+          
         </ul>
             </li>
             

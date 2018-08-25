@@ -3,7 +3,7 @@ import os
 import sqlite3
 sys.path.append(os.path.dirname(sys.argv[0])+'//lib')
 import serial
-from bottle import route, run ,template ,static_file,view,request, response
+from bottle import route, run ,template ,static_file,view,request, response ,redirect
 from os.path import dirname, realpath, sep, pardir
 import sys
 import bottle
@@ -100,10 +100,9 @@ def switchProcessing(number='number'):
  
 
 @route('/')
-@view('index')
 def index():
    # logger.warning('index')
-    return { 'get_url': '' } 
+   return redirect("/static/index.htm")
 @route('/houseHolds')
 @view('houseHolds')
 def houseHolds():
@@ -113,11 +112,18 @@ def houseHolds():
     c.execute("SELECT h.* ,p.* FROM households h join  port p where h.roomid = ? and p.id=h.householdport ", (roomid,))
     result = c.fetchall()
     return {'roomname':'BathRoom','roomid':roomid ,'result':result}	
+@route('/houseHoldsJson')
+def houseHoldsJson():
+    roomid=request.query['roomid']
+    conn = sqlite3.connect('HomeAutomation.db')
+    c = conn.cursor()
+    c.execute("SELECT h.* ,p.* FROM households h join  port p where h.roomid = ? and p.id=h.householdport ", (roomid,))
+    result = c.fetchall()
+    return {'roomname':'BathRoom','roomid':roomid ,'result':result}	
 @route('/')
-@view('index')
 def js():
  
-    return { 'get_url': '' } 
+    return redirect("/static/index.htm")
 	
 
 @route('/static/:path#.+#', name='static')

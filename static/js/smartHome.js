@@ -3,6 +3,7 @@ var app = angular.module("smartHome",  ["ngRoute"]);
 
 app.run(function($rootScope) {
 $rootScope.gpioFunctions={};
+$rootScope.roomid;
  $rootScope.gpioFunctions.ShowAlert=function(StrongMsg,Msg,divContent)
                {
                console.log('Alert');
@@ -976,7 +977,32 @@ var grid = $("#houseHold-grid-data").bootgrid({
 });
 
 
-app.controller('GPIOpins', function($scope, $http) {
+app.controller('GPIOpins', function($scope, $http,$rootScope, $compile) {
+    
+      var liText='';
+      
+     $http.get("/houseHoldsJson?roomid="+ $rootScope.roomid)
+    .then(function(response) {
+    $scope.roomname=response.data.roomname;
+    $scope.results=response.data.result;
+      $.each(response.data.result, function( index, result ) {
+       liText= liText+'<li   class="list-group-item d-flex justify-content-between align-items-center"> <a> <i class="fa fa-'+result[5]+'" aria-hidden="true"></i><label>'+result[2]+'  </label></a>  <label class="switch" style="float:right;"> <input type="checkbox" id="{{result[10]}}" id="'+result[10]+'" ng-model="gpios.gpio'+result[10]+'"  ng-change="gpioFunctions.CheckedGpio(gpios.gpio'+result[10]+',\''+result[10]+'\')"/> <span class="slider round  "></span></label>  </li> ';
+     
+  });
+   
+   console.log("from angular js "+liText ); 
+       //$scope.liText= liText;
+     //$('#switches').append(liText);
+    
+  var newEle = angular.element(liText);
+        $compile(newEle)($scope);
+     $('#bodyli').html(newEle);
+    console.log(response.data.result);
+       
+    });
+    
+  
+    
     $http.get("/getGPIO")
     .then(function(response) {
     console.log();
@@ -1074,22 +1100,25 @@ app.config(function($routeProvider) {
     }).when("/Ports", {
         templateUrl : "Ports.htm"
     }).when("/dynamic/:id", {
-        templateUrl :  function(params){ return '/houseHolds?roomid=' + params.id; },
+        templateUrl :  function(params){
+        
+       
+         return 'houseHolds.html?roomid=' + params.id; 
+         
+         },
             controller: 'houseHolds'
        
     });
 });
 
-app.controller('houseHolds',  function($scope, $route, $routeParams, $http){
+app.controller('houseHolds',  function($scope, $route, $routeParams, $http,$rootScope, $compile){
     $scope.id = "Your ID is " + $routeParams.id;
     console.log($scope.id);
-    
-      $http.get("/getRooms")
-    .then(function(response) {
-    console.log();
-        $scope.gpios =response.data;
-       
-    });
+  
+     $rootScope.roomid=$routeParams.id;
+        console.log('$rootScope.roomid :'+$rootScope.roomid);
+        
+   
 });
 app.controller('main',  function($scope, $route, $routeParams, $http){
     $scope.id = "Your ID is " + $routeParams.id;
