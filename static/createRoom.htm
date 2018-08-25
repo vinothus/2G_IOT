@@ -85,26 +85,26 @@
         <h4 class="modal-title">Modify Room</h4>
         <button ng-click="modalCloseButtonClick()"  type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
-      <form method="post" id="room_add">
+      <form method="post" id="mdroom_add">
       <!-- Modal body -->
        <div class="modal-body">
                 
-                <input type="hidden" value="add" name="action" id="action">
+                <input type="hidden"  name="action" id="action" value="00mdroom.id00" ng-model="mdroom.id">
                   <div class="form-group">
                     <label for="mdroom.name" class="control-label">Room Name:</label>
-                    <input type="text" class="form-control" id="mdroom.name" name="mdroom.name" ng-model="mdroom.name"/>
+                    <input type="text" class="form-control" id="mdroom.name" name="mdroom.name" value="00mdroom.name00" ng-model="mdroom.name"/>
                   </div>
                   <div class="form-group">
                     <label for="mdroomdesc" class="control-label">Room Description:</label>
-                    <input type="text" class="form-control" id="mdroom.desc" name="mdroom.desc"  ng-model="mdroom.desc" />
+                    <input type="text" class="form-control" id="mdroom.desc" name="mdroom.desc" value="00mdroom.desc00" ng-model="mdroom.desc"/>
                   </div>
                   <div class="form-group">
                     <label for="mduiicon" class="control-label">UI Icon:</label>
-                    <input type="text" class="form-control" id="mdroom.uiicon" name="mdroom.uiicon"  ng-model="mdroom.uiicon" />
+                    <input type="text" class="form-control" id="mdroom.uiicon" name="mdroom.uiicon" value="00mdroom.uiicon00"  ng-model="mdroom.uiicon" />
                    
 					     
 			        
-					<select ng-change="changedValue(iconselected)" ng-model="iconselected" class="form-control"   ng-model="selectedIcon">
+					<select id= "uiiconSelect" ng-change="modchangedValue(iconselected)" ng-model="iconselected" class="form-control"   ng-model="selectedIcon">
       				  <option value="">Select Account</option>
       				  <option 
            				ng-repeat="icon in icons"      value="{{icon}}" data-content="<i class='fa fa-cutlery'></i> Cutlery">{{icon}}</option>
@@ -120,7 +120,7 @@
       <!-- Modal footer -->
       <div class="modal-footer">
         <button  ng-click="modalCloseButtonClick()"  type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-         <button  ng-click="modifyRoom(room)" type="button" id="btn_add" class="btn btn-primary">Modify Room</button>
+         <button  ng-click="modifyRoom(room)" type="button" id="btn_mod" class="btn btn-primary">Modify Room</button>
       </div>
 
     </div>

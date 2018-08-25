@@ -38,7 +38,7 @@ var grid = $("#port-grid-data").bootgrid({
             id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
         };
     },
-    url: "/api/data/basic",
+    url: "/getPortsBootGrid",
     formatters: {
         "commands": function(column, row)
         {
@@ -61,9 +61,9 @@ var grid = $("#port-grid-data").bootgrid({
 
 
 });
-app.controller('CereateRoomModal' , function($rootScope,$scope, $http){
+app.controller('CereateRoomModal' , function($rootScope,$scope, $http,$compile){
 $scope.room={};
-$scope.icons = [
+$rootScope.icons = [
 "address-book-o",
 "address-card",
 "address-card-o",
@@ -889,12 +889,12 @@ $("#AddRoom").trigger({ type: "click" });
   
 }
 
-$scope.modifyRoom=function(room)
+$scope.modifyRoom=function(mdroom)
 {
  $('#smartHomeModal').modal('show');
-console.log(room);
-$("#AddRoom").trigger({ type: "click" });
-  $http.get("/makeRoom?roonname="+room.name+"&roomdesc="+room.desc+"&uiicon="+room.uiicon)
+console.log(mdroom);
+$("#ModifyRoom").trigger({ type: "click" });
+  $http.get("/modifyRoom?roonname="+mdroom.name+"&roomdesc="+mdroom.desc+"&uiicon="+mdroom.uiicon+"&id="+mdroom.id)
     .then(function(response) {
     console.log();
         $scope.room ={};
@@ -927,7 +927,7 @@ $("#AddRoom").trigger({ type: "click" });
       console.log("Current '$scope.room' value is [[" + $scope.room + "]]");
    };
 });
-app.controller('CereateRoom' , function($scope, $http){
+app.controller('CereateRoom' , function($scope, $http,$compile,$rootScope){
 
 
 
@@ -938,7 +938,12 @@ $scope.openRoom=function()
  
   
 }
-
+$scope.editRoom=function()
+ { 
+ var dlgElem = angular.element("#ModifyRoom");
+ 
+  
+}
 var grid = $("#room-grid-data").bootgrid({
     ajax: true,
     post: function ()
@@ -952,26 +957,53 @@ var grid = $("#room-grid-data").bootgrid({
         "commands": function(column, row)
         {
             return "<button type=\"button\" data-toggle=\"modal\" data-target=\"#ModifyRoom\"  class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id + "\" data-row-roomname=\"" + row.roomname + "\"  data-row-roomdesc=\"" + row.roomdesc+ "\"  data-row-uiicon=\"" + row.uiicon + "\" ><span class=\"fa fa-pencil\"></span></button> " + 
-                "<button type=\"button\"     class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-trash-o\"></span></button>";
+                "<button type=\"button\" ng-click=\"editRoom()\"    class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-trash-o\"></span></button>";
         }
     }
 }).on("loaded.rs.jquery.bootgrid", function()
 {
     /* Executes after data is loaded and rendered */
-    grid.find(".command-edit").on("click", function(e)
+    grid.find(".command-edit").on("click", function(e,$compile)
     {
          $scope.mdroom={};
-         $("#ModifyRoom").modal()
+      var dialougeStr= $("#ModifyRoom")[0].outerHTML;
+      dialougeStr=dialougeStr.replace("00mdroom.id00", $(this).data("row-id"));
+       dialougeStr=dialougeStr.replace("00mdroom.name00", $(this).data("row-roomname"));
+       dialougeStr=dialougeStr.replace("00mdroom.desc00", $(this).data("row-roomdesc"));
+       dialougeStr=dialougeStr.replace("00mdroom.uiicon00", $(this).data("row-uiicon"))
+       var dlgElem = angular.element(dialougeStr);
+        dlgElem.find( "#btn_mod" ).bind( "click", function(e) {
+		      var EditedStr= $(".modal-dialog")[0].outerHTML;
+		      
+		      var editedElem = angular.element(EditedStr);
+		     console.log( editedElem.find( "#mdroom.id" ).val());
+      
+         });
+          dlgElem.find( "#btn_mod" ).bind( "click", function(e) {
+		      var EditedStr= $(".modal-dialog")[0].outerHTML;
+		      
+		      var editedElem = angular.element(EditedStr);
+		     console.log( editedElem.find( "#mdroom.id" ).val());
+      
+         });
+         
+         
+          dlgElem.find( "#uiiconSelect" ).bind( "change", function(e) {
+      
+      console.log(( this.value ));
+       
+      
+         });
+         
+         
+              dlgElem.modal('show');
           
-          
-           $(".modal-body #mdroom.name").val( $(this).data("row-roomname") );
-           $('#ModifyRoom').modal('show');
-          $scope.mdroom.name=$(this).data("row-roomname");
         console.log( $(this).data("row-id"));
          console.log( $(this).data("row-roomname"));
          console.log( $(this).data("row-roomdesc"));
          console.log( $(this).data("row-uiicon"));
-         $("#room-grid-data").bootgrid('reload');
+         
+         //$("#room-grid-data").bootgrid('reload');
         
     }).end().find(".command-delete").on("click", function(e)
     {
@@ -1011,7 +1043,7 @@ var grid = $("#houseHold-grid-data").bootgrid({
             id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
         };
     },
-    url: "/api/data/basic",
+    url: "/getHouseholdsBootGrid",
     formatters: {
         "commands": function(column, row)
         {

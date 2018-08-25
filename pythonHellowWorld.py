@@ -225,6 +225,53 @@ def getRooms():
     "rows":rows ,
      "total":  getRowCount('rooms')}
     return json
+@route('/getHouseholdsBootGrid',method='POST')
+def getHouseholdsBootGrid():
+    conn = sqlite3.connect('HomeAutomation.db')
+    c = conn.cursor()
+    c.execute("SELECT * FROM households ")
+    result = c.fetchall()
+    rows=[];
+    print(result) 
+    for i in range(len(result)):
+         id=result[i][0]
+         roomid=result[i][1]
+         householdname=result[i][2]
+         householddesc=result[i][3]
+         householdport=result[i][4]
+         uiicon=result[i][5]
+         rows.append({"id":id,"roomid":roomid,"householdname":householdname,"householddesc":householddesc,"householdport":householdport,"uiicon":"<span class='fa fa-"+uiicon+"'>  "+uiicon+"</span>"})
+         for j in range(len(result[i])):
+              print(result[i][j])
+    json={
+     "current": 1,
+     "rowCount": 10,
+    "rows":rows ,
+     "total":  getRowCount('households')}
+    return json
+@route('/getPortsBootGrid',method='POST')
+def getPortsBootGrid():
+    conn = sqlite3.connect('HomeAutomation.db')
+    c = conn.cursor()
+    c.execute("SELECT * FROM port ")
+    result = c.fetchall()
+    rows=[];
+    print(result) 
+    for i in range(len(result)):
+         id=result[i][0]
+         portnamename=result[i][1]
+         portdesc=result[i][2]
+         porttype=result[i][3]
+         porthdid=result[i][4]
+         rows.append({"id":id,"portnamename":portnamename,"portdesc":portdesc,"porttype":porttype,"porthdid":porthdid})
+         for j in range(len(result[i])):
+              print(result[i][j])
+    json={
+     "current": 1,
+     "rowCount": 10,
+    "rows":rows ,
+     "total":  getRowCount('port')}
+    return json
 @route('/makeRoom')
 def makeRoom():
     roonname=request.query['roonname']
