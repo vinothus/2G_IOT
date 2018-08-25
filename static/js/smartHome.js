@@ -989,16 +989,11 @@ app.controller('GPIOpins', function($scope, $http,$rootScope, $compile) {
        liText= liText+'<li   class="list-group-item d-flex justify-content-between align-items-center"> <a> <i class="fa fa-'+result[5]+'" aria-hidden="true"></i><label>'+result[2]+'  </label></a>  <label class="switch" style="float:right;"> <input type="checkbox" id="{{result[10]}}" id="'+result[10]+'" ng-model="gpios.gpio'+result[10]+'"  ng-change="gpioFunctions.CheckedGpio(gpios.gpio'+result[10]+',\''+result[10]+'\')"/> <span class="slider round  "></span></label>  </li> ';
      
   });
-   
-   console.log("from angular js "+liText ); 
-       //$scope.liText= liText;
-     //$('#switches').append(liText);
-    
   var newEle = angular.element(liText);
         $compile(newEle)($scope);
      $('#bodyli').html(newEle);
-    console.log(response.data.result);
-       
+    console.log(response.data.roomname);
+    $('#roomname').html(response.data.roomname);
     });
     
   

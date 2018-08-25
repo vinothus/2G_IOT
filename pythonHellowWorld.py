@@ -119,7 +119,9 @@ def houseHoldsJson():
     c = conn.cursor()
     c.execute("SELECT h.* ,p.* FROM households h join  port p where h.roomid = ? and p.id=h.householdport ", (roomid,))
     result = c.fetchall()
-    return {'roomname':'BathRoom','roomid':roomid ,'result':result}	
+    c.execute("SELECT * FROM rooms where id= ? ", (roomid,))
+    roomidresult=c.fetchall()
+    return {'roomname':roomidresult[0][1],'roomid':roomid ,'result':result}	
 @route('/')
 def js():
  
