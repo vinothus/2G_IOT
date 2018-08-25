@@ -73,4 +73,61 @@
 </div>
 
 
+<!--ModifyRoom Record Model-->
+
+<!-- The Modal -->
+<div class="modal" id="ModifyRoom"    ng-controller="CereateRoomModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Modify Room</h4>
+        <button ng-click="modalCloseButtonClick()"  type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <form method="post" id="room_add">
+      <!-- Modal body -->
+       <div class="modal-body">
+                
+                <input type="hidden" value="add" name="action" id="action">
+                  <div class="form-group">
+                    <label for="mdroom.name" class="control-label">Room Name:</label>
+                    <input type="text" class="form-control" id="mdroom.name" name="mdroom.name" ng-model="mdroom.name"/>
+                  </div>
+                  <div class="form-group">
+                    <label for="mdroomdesc" class="control-label">Room Description:</label>
+                    <input type="text" class="form-control" id="mdroom.desc" name="mdroom.desc"  ng-model="mdroom.desc" />
+                  </div>
+                  <div class="form-group">
+                    <label for="mduiicon" class="control-label">UI Icon:</label>
+                    <input type="text" class="form-control" id="mdroom.uiicon" name="mdroom.uiicon"  ng-model="mdroom.uiicon" />
+                   
+					     
+			        
+					<select ng-change="changedValue(iconselected)" ng-model="iconselected" class="form-control"   ng-model="selectedIcon">
+      				  <option value="">Select Account</option>
+      				  <option 
+           				ng-repeat="icon in icons"      value="{{icon}}" data-content="<i class='fa fa-cutlery'></i> Cutlery">{{icon}}</option>
+			        </select>
+			        <label>Current Icon <span  id="iconShowcase" class="fa fa-microchip" aria-hidden="true"></span></label>
+    				 
+    
+                  </div>
+                
+            </div>
+            </form>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button  ng-click="modalCloseButtonClick()"  type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+         <button  ng-click="modifyRoom(room)" type="button" id="btn_add" class="btn btn-primary">Modify Room</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
 

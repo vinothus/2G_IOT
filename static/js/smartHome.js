@@ -889,6 +889,38 @@ $("#AddRoom").trigger({ type: "click" });
   
 }
 
+$scope.modifyRoom=function(room)
+{
+ $('#smartHomeModal').modal('show');
+console.log(room);
+$("#AddRoom").trigger({ type: "click" });
+  $http.get("/makeRoom?roonname="+room.name+"&roomdesc="+room.desc+"&uiicon="+room.uiicon)
+    .then(function(response) {
+    console.log();
+        $scope.room ={};
+        console.log(response)
+         $('#smartHomeModal').modal('hide');
+       var successDiv='<div class="alert alert-success"> <button type="button" class="close" data-dismiss="alert">&times;</button>  <strong>Success!</strong><span id="AlertStrong"> Indicates a successful or positive action.	</span>	</div>';
+		  $rootScope.gpioFunctions.ShowAlert('Response Success','Good time',successDiv);
+		   $('#ModifyRoom').modal('hide');
+   $("#room-grid-data").bootgrid('reload');
+       
+    }).catch(function onError(response) {
+    // Handle error
+    var data = response.data;
+    var status = response.status;
+    var statusText = response.statusText;
+    var headers = response.headers;
+    var config = response.config;
+    $('#smartHomeModal').modal('hide');
+     $('#ModifyRoom').modal('hide');
+    var divContent='<div  class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong id="AlertStrong">Danger!</strong> <span id="AlertSpan">This alert box could indicate a dangerous or potentially negative action.</span>  </div>';
+      $rootScope.gpioFunctions.ShowAlert('Response Fails','Please try after some time',divContent);
+     }) 
+    ;
+  
+}
+
   $scope.modalCloseButtonClick = function () {
       console.log("do action on Modal");
       $scope.room={};
@@ -919,8 +951,8 @@ var grid = $("#room-grid-data").bootgrid({
     formatters: {
         "commands": function(column, row)
         {
-            return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-pencil\"></span></button> " + 
-                "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-trash-o\"></span></button>";
+            return "<button type=\"button\" data-toggle=\"modal\" data-target=\"#ModifyRoom\"  class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id + "\" data-row-roomname=\"" + row.roomname + "\"  data-row-roomdesc=\"" + row.roomdesc+ "\"  data-row-uiicon=\"" + row.uiicon + "\" ><span class=\"fa fa-pencil\"></span></button> " + 
+                "<button type=\"button\"     class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-trash-o\"></span></button>";
         }
     }
 }).on("loaded.rs.jquery.bootgrid", function()
@@ -928,9 +960,18 @@ var grid = $("#room-grid-data").bootgrid({
     /* Executes after data is loaded and rendered */
     grid.find(".command-edit").on("click", function(e)
     {
-        
-        alert("You pressed edit on row: " + $(this).data("row-id"));
-        
+         $scope.mdroom={};
+         $("#ModifyRoom").modal()
+          
+          
+           $(".modal-body #mdroom.name").val( $(this).data("row-roomname") );
+           $('#ModifyRoom').modal('show');
+          $scope.mdroom.name=$(this).data("row-roomname");
+        console.log( $(this).data("row-id"));
+         console.log( $(this).data("row-roomname"));
+         console.log( $(this).data("row-roomdesc"));
+         console.log( $(this).data("row-uiicon"));
+         $("#room-grid-data").bootgrid('reload');
         
     }).end().find(".command-delete").on("click", function(e)
     {
@@ -939,6 +980,7 @@ var grid = $("#room-grid-data").bootgrid({
       $http.get("/deleteRoom?id="+  $(this).data("row-id"))
     .then(function(response) {
         $('#smartHomeModal').modal('hide');
+          $("#room-grid-data").bootgrid('reload');
         
     })
     .catch(function onError(response) {
