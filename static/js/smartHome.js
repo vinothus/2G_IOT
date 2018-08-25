@@ -1035,7 +1035,7 @@ app.controller('GPIOpins', function($scope, $http,$rootScope, $compile) {
               action="off";
               console.log('false :'+id);
               }
-         
+          $('#smartHomeModal').modal('show');
                $http.get("/switch/"+id+"/"+action)
    			 .then(function(response) {
  			   
