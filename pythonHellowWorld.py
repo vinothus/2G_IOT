@@ -238,6 +238,20 @@ def makeRoom():
     conn.commit()    
 
     return dict(data=new_id)
+@route('/modifyRoom')
+def modifyRoom():
+    id=request.query['id']
+    roonname=request.query['roonname']
+    roomdesc=request.query['roomdesc']
+    uiicon=request.query['uiicon']
+    conn = sqlite3.connect('HomeAutomation.db')
+    c = conn.cursor()
+    c.execute("INSERT OR REPLACE INTO rooms(id,roomname,roomdesc,uiicon) VALUES (?,?,?,?)", (id,roonname,roomdesc,uiicon))
+    new_id = c.lastrowid
+
+    conn.commit()    
+
+    return dict(data=new_id)
 @route('/deleteRoom')
 def deleteRoom():
     id=request.query['id']

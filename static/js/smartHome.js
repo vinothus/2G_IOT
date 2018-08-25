@@ -930,7 +930,7 @@ var grid = $("#room-grid-data").bootgrid({
     {
         
         alert("You pressed edit on row: " + $(this).data("row-id"));
-        console.log($(this));
+        
         
     }).end().find(".command-delete").on("click", function(e)
     {
@@ -1152,7 +1152,7 @@ $( document ).ready(function() {
     
      $.ajax({url: "/getRooms", success: function(result){
         $.each(result.data, function( index, value ) {
-        console.log( "index "+index + ": value " + value );
+       
         $("#rooms").append('<li   class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/dynamic/'+value[0]+'"><i class="fa fa-'+value[3]+'" aria-hidden="true"></i>'+value[1]+'</a></li>');
         });
         //<li   class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/dynamic/1"><i class="fa fa-microchip" aria-hidden="true"></i>Dynamic</a></li>
