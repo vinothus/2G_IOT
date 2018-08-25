@@ -215,7 +215,8 @@ def getRooms():
          id=result[i][0]
          roomname=result[i][1]
          roomdesc=result[i][2]
-         rows.append({"id":id,"roomname":roomname,"roomdesc":roomdesc})
+         uiicon=result[i][3]
+         rows.append({"id":id,"roomname":roomname,"roomdesc":roomdesc,"uiicon":"<span class='fa fa-"+uiicon+"'>"+uiicon+"</span>"})
          for j in range(len(result[i])):
               print(result[i][j])
     json={
