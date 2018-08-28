@@ -3,6 +3,7 @@ import os
 import sqlite3
 sys.path.append(os.path.dirname(sys.argv[0])+'//lib')
 import serial
+import auth
 from bottle import route, run ,template ,static_file,view,request, response ,redirect
 from os.path import dirname, realpath, sep, pardir
 import sys
