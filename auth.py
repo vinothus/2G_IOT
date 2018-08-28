@@ -66,7 +66,7 @@ def makeuser():
     address=request.query['address']
     conn = sqlite3.connect('HomeAutomation.db')
     c = conn.cursor()
-    c.execute("INSERT OR REPLACE INTO user(name,password,email,address) VALUES (?,?,?,?)", (name,password,email,address))
+    c.execute("INSERT OR REPLACE INTO user(name,password,email,address,phoneno) VALUES (?,?,?,?,?)", (name,password,email,address,phoneno))
     new_id = c.lastrowid
     conn.commit()    
     return dict(data=new_id)
