@@ -93,7 +93,7 @@ def edithouseholdslist():
     new_id = c.lastrowid
     conn.commit()    
     return dict(data=new_id)
-@route('/getCommonBootGrid')
+@route('/getCommonBootGrid', method='POST')
 def getCommonBootGrid():
     conn = sqlite3.connect('HomeAutomation.db')
     table=request.query['table']

@@ -80,7 +80,7 @@ var grid = $("#port-grid-data").bootgrid({
             id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
         };
     },
-    url: "/getPortsBootGrid",
+    url: "/getCommonBootGrid?table=port",
     formatters: {
         "commands": function(column, row)
         {
