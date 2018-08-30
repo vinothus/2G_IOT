@@ -1374,6 +1374,113 @@ $scope.saveUser=function(p)
 });
 
 
+
+app.controller('CereateSchedule' , function($scope, $http,$compile,$rootScope){
+
+	
+	$scope.saveSchedule=function(s)
+	{
+
+				$('#smartHomeModal').modal('show');
+				console.log(s);
+				$("#AddSchedule").trigger({ type: "click" });
+				  $http.get("/makeSchedule?schedulename="+s.name+"&scheduledesc="+s.desc+"&scheduletype="+s.type+"&scheduletime="+s.time)
+				    .then(function(response) {
+				    console.log();
+				        $scope.room ={};
+				        console.log(response)
+				         $('#smartHomeModal').modal('hide');
+				          $('#AddSchedule').modal('hide');
+				       var successDiv='<div class="alert alert-success"> <button type="button" class="close" data-dismiss="alert">&times;</button>  <strong>Success!</strong><span id="AlertStrong"> Indicates a successful or positive action.	</span>	</div>';
+						  $rootScope.gpioFunctions.ShowAlert('Response Success','Good time',successDiv);
+				   $("#schedule-grid-data").bootgrid('reload');
+				       
+				    }).catch(function onError(response) {
+				    // Handle error
+				    var data = response.data;
+				    var status = response.status;
+				    var statusText = response.statusText;
+				    var headers = response.headers;
+				    var config = response.config;
+				    $('#smartHomeModal').modal('hide');
+				    var divContent='<div  class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong id="AlertStrong">Danger!</strong> <span id="AlertSpan">This alert box could indicate a dangerous or potentially negative action.</span>  </div>';
+				      $rootScope.gpioFunctions.ShowAlert('Response Fails','Please try after some time',divContent);
+				     }) 
+				    ;
+
+
+	}
+
+	
+	
+
+
+	$scope.openSchedule=function()
+	 { 
+	 var dlgElem = angular.element("#AddSchedule");
+	  $compile(dlgElem)($scope);
+	 
+	  
+	}
+
+
+	console.log('schedule-grid-data');
+
+	var grid = $("#schedule-grid-data").bootgrid({
+	    ajax: true,
+	    post: function ()
+	    {
+	        return {
+	            id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
+	        };
+	    },
+	    url: "/getCommonBootGrid?table=schedule",
+	    formatters: {
+	        "commands": function(column, row)
+	        {
+	            return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-pencil\"></span></button> " + 
+	                "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-trash-o\"></span></button>";
+	        }
+	    }
+	}).on("loaded.rs.jquery.bootgrid", function()
+	{
+	    /* Executes after data is loaded and rendered */
+	    grid.find(".command-edit").on("click", function(e)
+	    {
+	      
+	        alert("You pressed edit on row: " + $(this).data("row-id"));
+	        
+	        
+	    }).end().find(".command-delete").on("click", function(e)
+	    {
+	         if (confirm("Please confirm to delete")) {
+	        $('#smartHomeModal').modal('show');
+	      $http.get("/deleteschedule?id="+  $(this).data("row-id"))
+	    .then(function(response) {
+	        $('#smartHomeModal').modal('hide');
+	           $("#user-grid-data").bootgrid('reload');
+	        
+	    })
+	    .catch(function onError(response) {
+	    
+	    $('#smartHomeModal').modal('hide');
+	    var divContent='<div  class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong id="AlertStrong">Danger!</strong> <span id="AlertSpan">This alert box could indicate a dangerous or potentially negative action.</span>  </div>';
+	       $rootScope.gpioFunctions.ShowAlert('Response Fails','Please try after some time',divContent);
+	     });
+	         
+	    
+
+	    }
+	    });
+	});
+
+
+
+	});
+
+
+
+
 app.config(function($routeProvider) {
     $routeProvider
     .when("/", {
@@ -1424,6 +1531,9 @@ app.config(function($routeProvider) {
        
     }).when("/Users", {
         templateUrl :  'manageUser.html'
+       
+    }).when("/Schedule", {
+        templateUrl :  'schedule.htm'
        
     });
 });
