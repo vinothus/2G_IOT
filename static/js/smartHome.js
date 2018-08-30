@@ -1455,10 +1455,10 @@ app.controller('CereateSchedule' , function($scope, $http,$compile,$rootScope){
 	    {
 	         if (confirm("Please confirm to delete")) {
 	        $('#smartHomeModal').modal('show');
-	      $http.get("/deleteschedule?id="+  $(this).data("row-id"))
+	      $http.get("/deleteTableData?tablename=schedule&id="+  $(this).data("row-id"))
 	    .then(function(response) {
 	        $('#smartHomeModal').modal('hide');
-	           $("#user-grid-data").bootgrid('reload');
+	           $("#schedule-grid-data").bootgrid('reload');
 	        
 	    })
 	    .catch(function onError(response) {

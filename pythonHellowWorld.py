@@ -49,6 +49,7 @@ def initDB():
   conn.execute("CREATE TABLE IF NOT EXISTS rooms (id INTEGER PRIMARY KEY, roomname char(100) NOT NULL, roomdesc char(100) NOT NULL ,uiicon char(100))")
   conn.execute("CREATE TABLE IF NOT EXISTS port (id INTEGER PRIMARY KEY, portnamename char(100) NOT NULL, portdesc char(100) NOT NULL,porttype char(100) NOT NULL ,porthdid char(100) NOT NULL)")
   conn.execute("CREATE TABLE IF NOT EXISTS households (id INTEGER PRIMARY KEY,roomid INTEGER, householdname char(100) NOT NULL, householddesc char(100) NOT NULL,householdport INTEGER NOT NULL ,uiicon char(100))")
+  conn.execute("CREATE TABLE IF NOT EXISTS schedule (id INTEGER PRIMARY KEY, schedulename char(100) NOT NULL, scheduledesc char(100) NOT NULL,scheduletype char(100) ,scheduletime char(100))")
   conn.execute("CREATE TABLE IF NOT EXISTS householdslist (id INTEGER PRIMARY KEY,householdname char(100) NOT NULL, householddesc char(100) NOT NULL,uiicon char(100))")
   conn.execute("INSERT OR REPLACE INTO port(id, portnamename,portdesc,porttype,porthdid) VALUES(1, 'GPIO56','General purpose I/O port','GPIO','56')")
   conn.execute("INSERT OR REPLACE INTO port(id, portnamename,portdesc,porttype,porthdid) VALUES(2, 'GPIO122','General purpose I/O port','GPIO','122')")
@@ -339,6 +340,39 @@ def deleteHouseholds():
     conn = sqlite3.connect('HomeAutomation.db')
     c = conn.cursor()
     c.execute("DELETE  FROM Households where id= ?" , (id,))
+    conn.commit()  
+    result = c.fetchall()
+    return dict(data=result)
+@route('/getTableData')
+def getHouseholds():
+    tablename=request.query['tablename']
+    conn = sqlite3.connect('HomeAutomation.db')
+    c = conn.cursor()
+    c.execute("SELECT * FROM "+tablename)
+    result = c.fetchall()
+    return dict(data=result)    
+@route('/makeSchedule')
+def makeSchedule():
+    schedulename=request.query['schedulename']
+    scheduledesc=request.query['scheduledesc']
+    scheduletype=request.query['scheduletype']
+    scheduletime=request.query['scheduletime']
+    
+    
+    conn = sqlite3.connect('HomeAutomation.db')
+    c = conn.cursor()
+    c.execute("INSERT OR REPLACE INTO Schedule(schedulename,scheduledesc,scheduletype,scheduletime) VALUES (?,?,?,?)", (schedulename,scheduledesc,scheduletype,scheduletime))
+    new_id = c.lastrowid
+
+    conn.commit()    
+    return dict(data=new_id)
+@route('/deleteTableData')
+def deleteHouseholds():
+    tablename=request.query['tablename']
+    id=request.query['id']
+    conn = sqlite3.connect('HomeAutomation.db')
+    c = conn.cursor()
+    c.execute("DELETE  FROM "+tablename+" where id= ?" , (id,))
     conn.commit()  
     result = c.fetchall()
     return dict(data=result)
