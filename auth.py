@@ -2,15 +2,19 @@ import sys
 import os
 import sqlite3
 sys.path.append(os.path.dirname(sys.argv[0])+'//lib')
+import bottle_session
 import serial
+from bottle.ext import beaker
 from bottle import route, run ,template ,static_file,view,request, response ,redirect
 from os.path import dirname, realpath, sep, pardir
 import sys
 import bottle
 from bottle_log import LoggingPlugin
 from gpio import GPIO, GPIOError
+import sched
+import threading
+import time
 bottle.TEMPLATE_PATH.insert(0, os.path.dirname(sys.argv[0])+'/views')
-
 @route('/gethouseholdslist')
 def getHouseholdslist():
     conn = sqlite3.connect('HomeAutomation.db')
@@ -124,3 +128,16 @@ def getRowCount(tablename):
     result = cursor.fetchall()
   
     return result[0][0]
+@route('/server')
+def server():
+     s = bottle.request.environ.get('beaker.session')
+     s['test'] = 'session'
+     s.save()
+     return request.query_string 
+@route('/serversession')
+def serversession():
+    s = bottle.request.environ.get('beaker.session')
+     
+    return s['test']
+
+    
