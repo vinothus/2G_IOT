@@ -6,11 +6,20 @@ $rootScope.gpioFunctions={};
 $rootScope.roomid;
  $rootScope.gpioFunctions.ShowAlert=function(StrongMsg,Msg,divContent)
                {
-               console.log('Alert');
+               console.log('from root Alert');
                $('#Alert').html(divContent);
                $('#Alert').show();
                $('#AlertStrong').html(StrongMsg);
                $('#AlertSpan').html(Msg);
+                console.log('before timoe out');
+               setTimeout(function(){ 
+                $('#Alert').hide();
+               
+                }, 3000);
+               console.log('after timoe out');
+               
+               
+               
                } 
  });
  
@@ -1225,11 +1234,17 @@ app.controller('GPIOpins', function($scope, $http,$rootScope, $compile) {
               $scope.gpioFunctions = {};
                $scope.gpioFunctions.ShowAlert=function(StrongMsg,Msg,divContent)
                {
-               console.log('Alert');
+               console.log('from scope Alert');
                $('#Alert').html(divContent);
                $('#Alert').show();
                $('#AlertStrong').html(StrongMsg);
                $('#AlertSpan').html(Msg);
+               
+                setTimeout(function(){ 
+                $('#Alert').hide();
+                }, 3000);
+
+
                } 
               $scope.gpioFunctions.CheckedGpio = function($event,id) {
               var action;
@@ -1485,7 +1500,14 @@ app.config(function($routeProvider) {
     $routeProvider
     .when("/", {
         templateUrl : "main.htm",
-            controller: 'main'
+            controller: 'main',
+            resolve:{
+                    "check":function($location){
+                    console.log("check function");
+                     $('#smartHomeModal').modal('show');
+                    
+                    
+                    }}
     })
     .when("/bedroom1", {
         templateUrl : "bedRoom1.htm"
@@ -1570,6 +1592,9 @@ $( document ).ready(function() {
         //<li   class="nav-item"><a ng-click="menuIndice = 1" class="dropdown-item"  href="#!/dynamic/1"><i class="fa fa-microchip" aria-hidden="true"></i>Dynamic</a></li>
     }});
     
-    
+   $('#mainDiv').bind("DOMSubtreeModified",function(){
+     $('#smartHomeModal').modal('hide');
+     console.log('hide')
+    }); 
     
 });
