@@ -33,7 +33,7 @@ print ('START:', time.time())
 e1 = scheduler.enter(2, 1, increment_counter, ('E1',))
 e2 = scheduler.enter(3, 1, increment_counter, ('E2',))
 e3 = scheduler.enter(delay, 1, increment_counter, ('E3',))
-e4 = scheduler.enter(calculateDelay('daily','00:01'), 1, increment_counter, ('E3',))
+e4 = scheduler.enter(calculateDelay('daily','00:01'), 1, increment_counter, ('E4',))
 # Start a thread to run the events
 t = threading.Thread(target=scheduler.run)
 t.start()
@@ -42,6 +42,10 @@ e4 = scheduler.enter(3, 1, increment_counter, ('E4',))
 scheduler.cancel(e1)
 print(scheduler.queue)
 # Wait for the scheduler to finish running in the thread
-t.join()
+main_thread = threading.currentThread()
+for t in threading.enumerate():
+    if t is not main_thread:
+        print(t)
+        t.join()
 print ('FINAL:', counter)
 

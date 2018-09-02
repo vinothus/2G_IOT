@@ -2,7 +2,6 @@ import sys
 import os
 import sqlite3
 sys.path.append(os.path.dirname(sys.argv[0])+'//lib')
-import bottle_session
 import serial
 from bottle.ext import beaker
 from bottle import route, run ,template ,static_file,view,request, response ,redirect
