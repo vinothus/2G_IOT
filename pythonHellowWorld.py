@@ -16,7 +16,7 @@ from gpio import GPIO, GPIOError
 #path = 'C:\Users\511517\Desktop\bottle'
 #sys.path.append(r"C:\Users\511517\Desktop\bottle")
 bottle.TEMPLATE_PATH.insert(0, os.path.dirname(sys.argv[0])+'/views')
-from bottle.ext import beaker
+
 import sched
 import threading
 import time
@@ -24,14 +24,14 @@ from datetime import datetime
 from datetime import timedelta
 scheduler = sched.scheduler(time.time, time.sleep)
 isCloudDroidrun=False
-session_opts = {
-    'session.type': 'file',
-    'session.cookie_expires': 300,
-    'session.data_dir': './data',
-    'session.auto': True
-}
+#session_opts = {
+#    'session.type': 'file',
+#    'session.cookie_expires': 300,
+#    'session.data_dir': './data',
+#   'session.auto': True
+#}
 
-app = beaker.middleware.SessionMiddleware(bottle.app(), session_opts) 
+#app = beaker.middleware.SessionMiddleware(bottle.app(), session_opts) 
 def str2bool(v):
   return v.lower() in ("yes", "true", "t", "1","on")
   
@@ -423,4 +423,5 @@ def listenSpeech():
 def CreateThread():
     startCloudDroid()
     return 'thread started'
-run(app,host='0.0.0.0', port=8080, debug=True)
+run(host='0.0.0.0', port=8080, debug=True)
+#run(app,host='0.0.0.0', port=8080, debug=True)

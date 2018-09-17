@@ -3,7 +3,7 @@ import os
 import sqlite3
 sys.path.append(os.path.dirname(sys.argv[0])+'//lib')
 import serial
-from bottle.ext import beaker
+#from bottle.ext import beaker
 from bottle import route, run ,template ,static_file,view,request, response ,redirect
 from os.path import dirname, realpath, sep, pardir
 import sys
@@ -127,16 +127,22 @@ def getRowCount(tablename):
     result = cursor.fetchall()
   
     return result[0][0]
-@route('/server')
-def server():
-     s = bottle.request.environ.get('beaker.session')
-     s['test'] = 'session'
-     s.save()
-     return request.query_string 
-@route('/serversession')
-def serversession():
-    s = bottle.request.environ.get('beaker.session')
+#@route('/server')
+#def server():
+#     s = bottle.request.environ.get('beaker.session')
+#     s['test'] = 'session'
+#     s.save()
+#     return request.query_string 
+#@route('/serversession')
+#def serversession():
+#    s = bottle.request.environ.get('beaker.session')
      
-    return s['test']
-
+#    return s['test']
+@route('/measureDistance')
+def measureDistance():
+    from i2c import I2C 
+    i2c = I2C("/dev/i2c-0")
+    msgs = [I2C.Message([0x01, 0x00]), I2C.Message([0x00], read=True)]
+    i2c.close()
+    return msgs
     
