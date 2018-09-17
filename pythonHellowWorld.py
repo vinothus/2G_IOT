@@ -66,7 +66,7 @@ def startCloudDroid():
      if isCloudDroidrun == False :
         print('inside if')
         isCloudDroidrun=True
-        e1 = scheduler.enter(2, 1, cloudDroid)
+        e1 = scheduler.enter(2, 1, cloudDroid,'')
         t = threading.Thread(target=scheduler.run)
         t.daemon = True
         t.start()
