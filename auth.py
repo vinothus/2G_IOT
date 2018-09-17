@@ -144,5 +144,5 @@ def measureDistance():
     i2c = I2C("/dev/i2c-0")
     msgs = [I2C.Message([0x01, 0x00]), I2C.Message([0x00], read=True)]
     i2c.close()
-    return msgs
+    return msgs[1].data[0]
     
