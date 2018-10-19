@@ -152,7 +152,7 @@ def offExpander():
     from i2c import I2C 
     i2cpath=request.query['i2cpath']
     i2c = I2C(i2cpath)
-    msgs = [I2C.Message([0x00, 0x00] read=False))]
+    msgs = [I2C.Message([0x00, 0x00] read=False)]
     i2c.transfer(0x20, msgs)
     i2c.close()
     return msgs[1].data[0]
