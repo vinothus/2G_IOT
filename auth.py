@@ -141,7 +141,8 @@ def getRowCount(tablename):
 @route('/measureDistance')
 def measureDistance():
     from i2c import I2C 
-    i2c = I2C("/dev/i2c-0")
+    i2cpath=request.query['i2cpath']
+    i2c = I2C(i2cpath)
     msgs = [I2C.Message([0xFF, 0xFF]), read=False)]
     i2c.transfer(0x20, msgs)
     i2c.close()
