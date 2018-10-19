@@ -142,7 +142,8 @@ def getRowCount(tablename):
 def measureDistance():
     from i2c import I2C 
     i2c = I2C("/dev/i2c-0")
-    msgs = [I2C.Message([0x01, 0x00]), I2C.Message([0x00], read=True)]
+    msgs = [I2C.Message([0xFF, 0xFF]), read=False)]
+    i2c.transfer(0x20, msgs)
     i2c.close()
     return msgs[1].data[0]
     
