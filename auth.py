@@ -156,4 +156,11 @@ def offExpander():
     i2c.transfer(0x20, msgs)
     i2c.close()
     return msgs[1].data[0]
-    
+@route('/smbus')
+def smbus():
+    from smbus2 import SMBus
+    bus = SMBus(1)
+    b = bus.read_byte_data(80, 0)
+    bus.close()
+    return msgs[1].data[0]
+        
