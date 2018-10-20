@@ -41,7 +41,7 @@ def printme(pinnum,boolval):
    value =boolval  
    gpio_out.write(value)
    gpio_out.close()
-   return	True
+   return	str(True)
 
 
 def getVal(pinnum):
