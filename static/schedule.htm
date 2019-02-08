@@ -13,6 +13,8 @@
             <th data-column-id="scheduledesc" data-order="desc">Schedule Description</th>
             <th data-column-id="scheduletype" data-order="desc">Schedule Type</th>
             <th data-column-id="scheduletime" data-order="desc">Schedule Time</th>
+            <th data-column-id="cronExp" data-order="desc">Cron Exp</th>
+            <th data-column-id="methodpar" data-order="desc">Mathod Param/th>
             <th data-column-id="commands" data-formatter="commands" data-sortable="false">Action</th>
         </tr>
     </thead>
@@ -49,6 +51,14 @@
                 <div class="form-group">
                     <label for="scheduletime" class="control-label">Schedule Time:</label>
                     <input type="text" class="form-control" id="scheduletime" ng-model="s.time"  name="scheduletime"/>
+                  </div>
+                <div class="form-group">
+                    <label for="scheduletime" class="control-label">CronExp:</label>
+                    <input type="text" class="form-control" id="scheduletime" ng-model="s.cronExp"  name="cronExp"/>
+                  </div>
+                  <div class="form-group">
+                    <label for="scheduletime" class="control-label">Method Param:</label>
+                    <input type="text" class="form-control" id="scheduletime" ng-model="s.methodpar"  name="methodpar"/>
                   </div>
             </div>
             </form>

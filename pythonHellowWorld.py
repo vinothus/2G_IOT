@@ -1,8 +1,8 @@
 import sys
 import os
 import sqlite3
-sys.path.append(os.path.dirname(sys.argv[0])+'//lib')
-sys.path.append(os.path.dirname(sys.argv[0]))
+sys.path.append(os.path.dirname(os.path.abspath(sys.argv[0]))+'//lib')
+sys.path.append(os.path.dirname(os.path.abspath(sys.argv[0])))
 import serial
 import auth
 from bottle import route, run ,template ,static_file,view,request, response ,redirect
@@ -59,9 +59,9 @@ def getValOut(pinnum):
    
    return	value
 def startCloudDroid():
-     global isCloudDroidrun
-     global scheduler
+     import datetime
      print('cloud droid try to start')
+     global isCloudDroidrun
      print(isCloudDroidrun)
      if isCloudDroidrun == False :
         print('inside if')
@@ -71,18 +71,50 @@ def startCloudDroid():
         t.daemon = True
         t.start()
         print('cloud droid started')
+def printData(params):
+    print('printData :'+params)
+def MaskData(param1,param2):
+    print(param1+' :'+param2 )     
+def makeSchedular(type,cronExp,methodPar):
+    print('type'+type+'methodPar :'+methodPar)
+    import schedule
+    if type == 'minute' :
+       print('schedular starts'+methodPar.split(':')[0])
+       MetArr=methodPar.split(':')
+       MetArr.remove(methodPar.split(':')[0])
+       str='schedule.every('+(cronExp)+').minutes.do(lambda:'+methodPar.split(':')[0]+'('
+       for i in range(len(MetArr)):
+           str=str+'\''+MetArr[i]+'\','
+       str = str[:-1]    
+       str=str+'))';
+       print(str)
+       eval(str)
+       #schedule.every(int(cronExp)).minutes.do(eval(methodPar.split(':')[0]),methodPar.split(':')[1])
+       
 def cloudDroid():
-    while(True):
-     print(' try to ping server')
-     time.sleep(1)
-     print('wake after sleep 1 sec')
+     import schedule
+     import time
+     import datetime
+     conn = sqlite3.connect('HomeAutomation.db')
+     c = conn.cursor()
+     c.execute("SELECT * FROM schedule ")
+     result = c.fetchall()
+     for i in range(len(result)):
+         makeSchedular(result[i][3],result[i][5],result[i][6])
+     schedule.every(1).minutes.do(printData,'testparams')
+     print ('schedule starts'+datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))
+     while(True):
+      time.sleep(1)
+      schedule.run_pending()
+      #print (datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))
+      #print('wake after sleep 1 sec'+now.year+ ' '+now.month+' '+now.day+' '+now.hour+' '+now.minute)
 def initDB():
   conn = sqlite3.connect('HomeAutomation.db')
   conn.execute("CREATE TABLE IF NOT EXISTS user (id INTEGER PRIMARY KEY, name char(100) NOT NULL, password char(100) NOT NULL , email char(100), phoneno char(12) ,address char(100))")
   conn.execute("CREATE TABLE IF NOT EXISTS rooms (id INTEGER PRIMARY KEY, roomname char(100) NOT NULL, roomdesc char(100) NOT NULL ,uiicon char(100))")
   conn.execute("CREATE TABLE IF NOT EXISTS port (id INTEGER PRIMARY KEY, portnamename char(100) NOT NULL, portdesc char(100) NOT NULL,porttype char(100) NOT NULL ,porthdid char(100) NOT NULL)")
   conn.execute("CREATE TABLE IF NOT EXISTS households (id INTEGER PRIMARY KEY,roomid INTEGER, householdname char(100) NOT NULL, householddesc char(100) NOT NULL,householdport INTEGER NOT NULL ,uiicon char(100))")
-  conn.execute("CREATE TABLE IF NOT EXISTS schedule (id INTEGER PRIMARY KEY, schedulename char(100) NOT NULL, scheduledesc char(100) NOT NULL,scheduletype char(100) ,scheduletime char(100))")
+  conn.execute("CREATE TABLE IF NOT EXISTS schedule (id INTEGER PRIMARY KEY, schedulename char(100) NOT NULL, scheduledesc char(100) NOT NULL,scheduletype char(100) ,scheduletime char(100),cronExp char(100),methodpar char(100))")
   conn.execute("CREATE TABLE IF NOT EXISTS householdslist (id INTEGER PRIMARY KEY,householdname char(100) NOT NULL, householddesc char(100) NOT NULL,uiicon char(100))")
   conn.execute("INSERT OR REPLACE INTO port(id, portnamename,portdesc,porttype,porthdid) VALUES(1, 'GPIO56','General purpose I/O port','GPIO','56')")
   conn.execute("INSERT OR REPLACE INTO port(id, portnamename,portdesc,porttype,porthdid) VALUES(2, 'GPIO122','General purpose I/O port','GPIO','122')")
@@ -94,6 +126,7 @@ def initDB():
   conn.execute("INSERT OR REPLACE INTO port(id, portnamename,portdesc,porttype,porthdid) VALUES(8, 'GPIO121','General purpose I/O port','GPIO','121')")  
   conn.commit()
   print('database initiated')
+  print(os.path.dirname(os.path.abspath(sys.argv[0])))
   startCloudDroid()
   
   
@@ -171,7 +204,8 @@ def js():
 @route('/static/:path#.+#', name='static')
 def static(path):
     #logger.warning('static')
-    return static_file(path, root=os.path.dirname(sys.argv[0])+'/static')
+
+    return static_file(path, root=os.path.dirname(os.path.abspath(sys.argv[0]))+'/static')
 
 @route('/counter')
 def counter():
@@ -393,11 +427,12 @@ def makeSchedule():
     scheduledesc=request.query['scheduledesc']
     scheduletype=request.query['scheduletype']
     scheduletime=request.query['scheduletime']
-    
+    cronExp=request.query['cronExp']
+    methodpar=request.query['methodpar']
     
     conn = sqlite3.connect('HomeAutomation.db')
     c = conn.cursor()
-    c.execute("INSERT OR REPLACE INTO Schedule(schedulename,scheduledesc,scheduletype,scheduletime) VALUES (?,?,?,?)", (schedulename,scheduledesc,scheduletype,scheduletime))
+    c.execute("INSERT OR REPLACE INTO Schedule(schedulename,scheduledesc,scheduletype,scheduletime,cronExp,methodpar) VALUES (?,?,?,?,?,?)", (schedulename,scheduledesc,scheduletype,scheduletime,cronExp,methodpar))
     new_id = c.lastrowid
 
     conn.commit()    

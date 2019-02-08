@@ -1399,7 +1399,7 @@ app.controller('CereateSchedule' , function($scope, $http,$compile,$rootScope){
 				$('#smartHomeModal').modal('show');
 				console.log(s);
 				$("#AddSchedule").trigger({ type: "click" });
-				  $http.get("/makeSchedule?schedulename="+s.name+"&scheduledesc="+s.desc+"&scheduletype="+s.type+"&scheduletime="+s.time)
+				  $http.get("/makeSchedule?schedulename="+s.name+"&scheduledesc="+s.desc+"&scheduletype="+s.type+"&scheduletime="+s.time+"&cronExp="+s.cronExp+"&methodpar="+s.methodpar)
 				    .then(function(response) {
 				    console.log();
 				        $scope.room ={};
