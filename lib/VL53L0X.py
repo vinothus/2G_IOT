@@ -2,7 +2,7 @@
 # Supports Python 3.X and Above
 
 import time
-import smbus
+from i2c import I2C 
 
 # ===========================================================================
 # ST_VL53X0L TOF Sensor

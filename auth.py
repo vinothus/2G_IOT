@@ -147,6 +147,36 @@ def measureDistance():
     i2c.transfer(0x20, msgs)
     i2c.close()
     return msgs[1].data[0]
+def convert(pinNo):
+    if pinNo==1:
+       return 
+@route('/setPinOn')
+def setPinOn():
+    from i2c import I2C 
+    i2cpath=request.query['i2cpath']
+    pinNo=request.query['pinNo']
+    i2c = I2C(i2cpath)
+    msgs = [I2C.Message([0xFF, 0xFF], read=True)]
+    i2c.transfer(0x20, msgs)
+    array1=msgs[1].data[0]
+    array2=msgs[1].data[1]
+    if pinNo.find('A') == -1:
+     print ('A')
+     pinNo=pinNo.replace('A', '')
+    else:
+     print('B')
+    i2c.close()
+    return msgs[1].data[0]
+@route('/setPinsOn')
+def setPinsOn():
+    i2cpath=request.query['i2cpath']
+    pinNo=request.query['pinNo']
+    if pinNo.find('A') == -1:
+     print ('B')
+     pinNo=pinNo.replace('A', '')
+    else:
+     print('A')
+    return 'done'    
 @route('/offExpander')
 def offExpander():
     from i2c import I2C 

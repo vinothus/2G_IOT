@@ -5,6 +5,7 @@ sys.path.append(os.path.dirname(os.path.abspath(sys.argv[0]))+'//lib')
 sys.path.append(os.path.dirname(os.path.abspath(sys.argv[0])))
 import serial
 import auth
+import schedule
 from bottle import route, run ,template ,static_file,view,request, response ,redirect
 from os.path import dirname, realpath, sep, pardir
 import sys
@@ -75,9 +76,8 @@ def printData(params):
     print('printData :'+params)
 def MaskData(param1,param2):
     print(param1+' :'+param2 )     
-def makeSchedular(type,cronExp,methodPar):
+def makeSchedular(type,cronExp,methodPar,taskName):
     print('type'+type+'methodPar :'+methodPar)
-    import schedule
     if type == 'minute' :
        print('schedular starts'+methodPar.split(':')[0])
        MetArr=methodPar.split(':')
@@ -86,7 +86,7 @@ def makeSchedular(type,cronExp,methodPar):
        for i in range(len(MetArr)):
            str=str+'\''+MetArr[i]+'\','
        str = str[:-1]    
-       str=str+'))';
+       str=str+')).tag(\''+taskName+'\')';
        print(str)
        eval(str)
        #schedule.every(int(cronExp)).minutes.do(eval(methodPar.split(':')[0]),methodPar.split(':')[1])
@@ -100,7 +100,7 @@ def cloudDroid():
      c.execute("SELECT * FROM schedule ")
      result = c.fetchall()
      for i in range(len(result)):
-         makeSchedular(result[i][3],result[i][5],result[i][6])
+         makeSchedular(result[i][3],result[i][5],result[i][6],result[i][1])
      schedule.every(1).minutes.do(printData,'testparams')
      print ('schedule starts'+datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))
      while(True):
@@ -144,7 +144,30 @@ def _init_():
      print('exception occur on initilize smart device')
 _init_() 
 initDB()
-
+@route('/jobs')
+def jobs():
+    print(schedule.jobs)
+    jobArray=schedule.jobs
+    returnArray=[]
+    for i in range(len(jobArray)):
+        print(''+str(jobArray[i].interval))
+        print(''+str(jobArray[i].latest))
+        print(''+str(jobArray[i].job_func))
+        print(''+str(jobArray[i].unit))
+        print(''+str(jobArray[i].at_time))
+        print(''+str(jobArray[i].last_run))
+        print(''+str(jobArray[i].next_run))
+        print(''+str(jobArray[i].period))
+        print(''+str(jobArray[i].start_day))
+        print(''+str(jobArray[i].tags))
+        print(''+str(jobArray[i].scheduler))
+        returnArray.append({'Interval':str(jobArray[i].interval),'Job':str(jobArray[i].job_func),'Next_Run':str(jobArray[i].next_run),'Unit':str(jobArray[i].unit),'Tag':str(jobArray[i].tags)})
+    return dict(data=returnArray)
+@route('/deljobs')
+def deljobs():
+    jobName=request.query['jobName']
+    schedule.clear(jobName)
+    return 'done'
 @route('/dropTable')
 def dropTable():
     tableName=request.query['tableName']
